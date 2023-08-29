@@ -13,6 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
 
 </head>
 
@@ -61,10 +62,14 @@
 
     <div id="map-card" class="row map-card">
       <!--Check List-->
-      <div id="var-check" class="mb-3 col-6"></div>
-
+      <div id="wave-select"></div>
+      
       <!--Map-->
-      <div id="map" class="col"></div>
+      <div id="map"></div>
+
+      <div id="info" class="row map-card">
+
+      </div>
 
     </div>
 
@@ -115,6 +120,8 @@
     <script src="app.js"></script>
     <script src="./functions/map.js"></script>
     <script src="./functions/checklist.js"></script>
+    <script src="./functions/dataPrep.js"></script>
+
   </div>
 
   <footer id="end-card" class="row p-3">
@@ -128,7 +135,7 @@
 
     <div id="git" class="col p-3 mb-3">
       <h5>Repository</h5>
-      <a class="small" href="https://github.com/CptMeh/OpenData">github.com</a>
+      <a class="small" href="https://github.com/CptMeh/TREE-Visualisation">github.com</a>
     </div>
 
     <div id="tree" class="col p-3 mb-3">
