@@ -1,0 +1,140 @@
+.body {
+}
+
+.map-card {
+  height: 850px;
+  width: 1320x;
+  margin-left:auto;
+  margin-right:auto;
+  padding-top: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+}
+
+#map {
+  height: 500px;
+  width: 50px;
+}
+
+#var-check {
+  height: 400px;
+  width: 400px;
+  float: left;
+}
+
+#end-card {
+  background-color: #555;
+  padding: "5px";
+}
+
+#dev {
+  text-align: left;
+  color: lightgray;
+}
+
+#tree {
+  text-align: right;
+  color: lightgray;
+}
+
+#git {
+  text-align: center;
+  color: lightgray;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.form-check-input {
+  margin-right: 5px;
+}
+
+.label {
+  margin-bottom: 0;
+}
+
+.button-item {
+  margin-bottom: 3px;
+}
+
+.button-item button {
+  padding: 3px 3px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.button-item button:hover {
+  background-color: #e0e0e0;
+}
+
+.button-item button:focus {
+  outline: none;
+}
+
+.button-item button.active {
+    background-color: #bcbcbd; 
+  }
+
+.button-item2 button.active {
+    background-color: #bbbbbd;
+  }
+
+.button-item2 {
+  margin-bottom: 5px;
+}
+
+.button-item2 button {
+  padding: 10px 10px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+}
+
+.button-item2 button:hover {
+  background-color: #e0e0e0;
+}
+
+.button-item2 button:focus {
+  outline: none;
+}
+
+.small-text {
+  font-size: 14px;
+}
+
+.component {
+  height: 850px;
+  width: 1320x;
+}
+
+.tooltip {
+  background-color: "white";
+  border: "solid";
+  border-width: "2px";
+  border-radius: "5px";
+  padding: "5px";
+  opacity: 0;
+  position: absolute;
+  overflow: scroll;
+}
+
+.canton {
+  fill: "grey";
+  stroke: "white";
+  stroke-width: 0.5;
+}
+
+.canton-highligted {
+  stroke: "white";
+  stroke-width: 2;
+  cursor: "pointer";
+}
+
