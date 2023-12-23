@@ -5,11 +5,10 @@ const COLORING = {"NIA" : "#a00000",
 
 const SVG = d3.select("#map")
                 .append("svg")
-                .classed("svg-container", true) 
-                .classed("col", true) 
-                .attr("preserveAspectRatio", "xMinYMin")
-                .attr("viewBox", "0 0 900 700")
-                //.attr("overflow", "scroll")
+                    .classed("svg-container", true) 
+                    .classed("col", true) 
+                    .attr("preserveAspectRatio", "xMinYMin")
+                    .attr("viewBox", "0 0 900 700");
                 
 
 class Map {   
@@ -35,7 +34,6 @@ class Map {
 
         this.drawMap();
         this.initDescr();
-        this.addColorDescr();
     }   
 
     /**
@@ -44,17 +42,17 @@ class Map {
     drawMap() {
         let tooltip = d3.select("#map")
                         .append("div")
-                        .attr("id", "tooltip")
-                        .style("opacity", 0)
-                        .attr("class", "tooltip")
-                        .style("background-color", "white")
-                        .style("border", "solid")
-                        .style("border-width", "2px")
-                        .style("border-radius", "5px")
-                        .style("padding", "5px")
-                        .style("position","absolute")
-                        .style("overflow", "scroll")
-                        .style("pointer-events", "none"); 
+                            .attr("id", "tooltip")
+                            .style("opacity", 0)
+                            .attr("class", "tooltip")
+                            .style("background-color", "white")
+                            .style("border", "solid")
+                            .style("border-width", "2px")
+                            .style("border-radius", "5px")
+                            .style("padding", "5px")
+                            .style("position","absolute")
+                            .style("overflow", "scroll")
+                            .style("pointer-events", "none"); 
 
         let map = this; // To avoid confusion for the event listeners
 
@@ -86,10 +84,11 @@ class Map {
         };
 
         SVG.selectAll("path").remove();
-
+        
         let features = this.#geoData.features
         let maxScale = 0
         
+        // This finds the max scale for the coloring, so there's also color even if the values ar way smaller
         for (let d in features) {
             let detail = features[d].properties.details[this.#wave][this.#selected]
 
@@ -99,43 +98,40 @@ class Map {
 
         }
 
+        const colorScale = d3.scaleLinear()
+                            .domain([0, maxScale])  // Assuming the percentage ranges from 0 to 100
+                            .range(["#FFFFFF", COLORING[this.#selected]]); 
+
+        // This defines the crosshatch pattern, for when a value is 0.
+        SVG.append("defs")
+            .append("pattern")
+                .attr("id", "crosshatch")
+                .attr("patternUnits", "userSpaceOnUse")
+                .attr("width", 8)
+                .attr("height", 8)
+            .append("image")
+                .attr("xlink:href", "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc4JyBoZWlnaHQ9JzgnPgogIDxyZWN0IHdpZHRoPSc4JyBoZWlnaHQ9JzgnIGZpbGw9JyNmZmYnLz4KICA8cGF0aCBkPSdNMCAwTDggOFpNOCAwTDAgOFonIHN0cm9rZS13aWR0aD0nMC41JyBzdHJva2U9JyNhYWEnLz4KPC9zdmc+Cg==")
+                .attr("x", 0)
+                .attr("y", 0)
+                .attr("width", 8)
+                .attr("height", 8);
 
         SVG.selectAll("path")
             .data(this.#geoData.features)
             .enter()
             .append("path")
-            .attr("class", "canton")
-            .attr("id", function(d) { return d.properties.KantonId; })
-            .attr("d", this.#path)
-            .on("mousemove", mousemove)
-            .on("click", mouseclick)
-            .on("mouseleave", mouseleave)
-            .style("stroke-width", 0.5)
-            .style("stroke", "white")
-            .style("fill", d => this.getColor(d.properties.details[this.#wave], this.#selected, maxScale)); 
+                .attr("class", "canton")
+                .attr("id", function(d) { return d.properties.KantonId; })
+                .attr("d", this.#path)
+                .on("mousemove", mousemove)
+                .on("click", mouseclick)
+                .on("mouseleave", mouseleave)
+                .style("stroke-width", 0.5)
+                .style("stroke", "white")
+                .style("fill", d => {return d.properties.details[this.#wave][this.#selected] === 0 ? "url(#crosshatch)" : colorScale(d.properties.details[this.#wave][this.#selected]); }); 
     }
 
     
-    /** 
-     * Creates the color scale and returns the color value for the canton.
-     * 
-     * @param details   Array containing all the details
-     * @param select  String the selected variable 
-     * 
-     * @returns         color value
-     **/
-    getColor(details, select, maxScale) {
-        const colorScale = d3.scaleLinear()
-                            .domain([0, maxScale])  // Assuming the percentage ranges from 0 to 100
-                            .range(["#FFFFFF", COLORING[select]]);  // Scale from white to blue
-
-        return colorScale(details[select]).toString()
-
-    }
-
-    addColorDescr() {
-    // TODO 
-    }
 
     // Creates the permanent description of the values, shown in the tool tip.
     permaDescr(canton, that) {
@@ -185,10 +181,10 @@ class Map {
 
     initDescr() {
         let label = this.initLabel() + "<p><b> Kanton </b></p>" 
-                    + "</p><p>Berufsausbildung (BB): - " 
-                    + "</p><p>Allgemeinausbildung (AB): - "
-                    + "</p><p>Zwischenlösung (ZL): -</p>"
-                    + "<p>Nicht in Ausbildung (NIA): - ";
+                    + "<p>" + vocab["BB"][lang] + " (BB): - </p>" 
+                    + "<p>" + vocab["AB"][lang] + " (AB): - </p>" 
+                    + "<p>" + vocab["ZL"][lang] + " (ZL): - </p>" 
+                    + "<p>" + vocab["NIA"][lang] + " (NIA): - </p>";
 
         d3.select("#canton-descr").html(label);
     }
