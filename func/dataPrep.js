@@ -1,22 +1,21 @@
-
-function combineData(geoData, treeData) {
-    //cleanData(treeData) to remove all non-valids
+/*
+Cleans and prepares the TREE-Survey data to be mapped onto a map of Switzerland per canton.
+The data points will be summarised in terms of frequency.
+*/
+function prepareData(geoData, treeData) {
+    //TODO: cleanData(treeData) to remove all non-valids
     waves = categorizeEdj(treeData);
-    //console.log(treeData)
+    //TODO: %
 
     geoData.features.forEach(function(d) {
         d.properties.details = waves[d.properties.KantonId];
     });
-    console.log(geoData)
 
     return geoData;
 }
 
 
-/*
-Cleans and prepares the TREE-Survey data to be mapped onto a map of Switzerland per canton.
-The data points will be summarised in terms of frequency.
-*/
+
 function categorizeEdj(treeData) {
     treeData = _.groupBy(treeData, "aes_canton");// from underscore library
 
@@ -44,7 +43,7 @@ function categorize(edj) {
                         "Other intermediate solution": "ZL",
                         "Other general education programme (specialized middle school, Waldorf)": "ZL"};
     
-    return educationMap[edj] || edj; // Return the categorized value or the original if not found
+    return educationMap[edj] || "NA"; // Return the categorized value or NA if not found
 }
 
 

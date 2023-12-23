@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>index</title>
+    <title>TREE2-Studie Visualisierung</title>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
@@ -14,66 +14,68 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
-
 </head>
 
 <body>
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand px-4" href="#">TREE2-Visualisierung</a>
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand px-4" href="#">TREE2-Visualisierung</a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link px-4" href="#map">Map</a>
-          </li>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link px-4" href="#map">Map</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link px-4" href="#descr">Beschreibung</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link px-4" href="#descr">Beschreibung</a>
+        </li>
 
-          <li class="nav-item">
-            <a class="nav-link px-4" href="#dev">Developers</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link px-4" href="#dev">Developers</a>
+        </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Links zu Ressourcen
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="https://www.tree.unibe.ch/">TREE Studie</a>
-              <a class="dropdown-item" href="https://opendata.swiss/en/dataset/kantone-lfi">Geo Daten</a>
-              <a class="dropdown-item" href="https://github.com/CptMeh/OpenData">GitHub</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sprache
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="" onclick="loadLangFile('./func/lang/lang-de.js')">Deutsch</a>
+            <a class="dropdown-item" href="" onclick="loadLangFile('./func/lang/lang-en.js')">English</a>
+            <a class="dropdown-item" href="" onclick="loadLangFile('./func/lang/lang-fr.js')">Français</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
   <div id="main" class="container mb-2">
-
-  </br>
-
+    </br>
     <h1 class="p-1 mt-5">Visualierung der TREE2-Studie - kantonal</h1>
+    </br>
 
-    <div id="map-card" class="row map-card">
-      <!--Check List-->
-      <div id="wave-select"></div>
-      
-      <!--Map-->
-      <div id="map"></div>
+    <div id="map-card" class="container">    
+       <div id="map-row" class="row">
+        <!--Dropdown-->
+        <div id="wave-select" class="p-0 mb-0"></div>
 
-      <div id="info" class="row map-card">
+        <!--Canton Description-->
+        <div id="canton-descr" class="col p-4 mb-3"></div>
 
+        <!--Map-->
+        <div id="map" class="col">
+          
+        </div>
+        
       </div>
-
+      
     </div>
 
-    <div id="descr" class="card p-4 mb-3 component">
+    <div id="descr" class="card p-4 mb-3">
       <h2>Beschreibung</h2>
       <h4 class="mt-5">Visualisierung der TREE2-Studie</h4>
       <p>
@@ -92,20 +94,7 @@
       </p>
 
        <h4 class="mt-4">Erklärung zu den Variablen</h4>
-      <p>
-        Die meisten der anwählbaren Variablen sind selbsterklärend. Genauere Informationen, wie genau "high", "medium" und "low" definiert und gemessen worden sind, beispielsweise bei der "Parental socioeconomic status level"-Variable,
-        finden Sie auf der <a href="https://www.tree.unibe.ch/">Webseite der TREE-Studie</a>.
-      </p>
-       <h5 class="mt-4">Zur Gewichtung</h5>
-      <p>
-        <h6>Educational Status</h6>
-        Diese Variablen wurden gewichtet. Die Zahlen vor den Prozentangaben entsprechen also nicht den exakten Teilnehmerzahlen, da jedem Teilnehmer eine individuelle Gewichtung zugeordnet wird.
-        Weitere Informationen zu der Berechnung der Gewichtungsvariablen finden Sie ebenfalls auf der oben angegebenen Webseite.
-      </p>
-      <p>
-        <h6>Alle weiteren Variablen</h6>
-        Die Angaben aller weiteren Variablen entsprechen den exakten Teilnehmerzahlen und wurden nicht mit einer Gewichtungsvariable multipliziert.
-      </p>
+
 
       <h4 class="mt-4">Weiteres</h4>
       <p>
@@ -116,11 +105,11 @@
         zur Verfügung gestellt.
       </p>
     </div>
-
+    <script id="lang" src="./func/lang/lang-de.js"></script>
     <script src="app.js"></script>
-    <script src="./functions/map.js"></script>
-    <script src="./functions/checklist.js"></script>
-    <script src="./functions/dataPrep.js"></script>
+    <script src="./func/map.js"></script>
+    <script src="./func/selection.js"></script>
+    <script src="./func/dataPrep.js"></script>
 
   </div>
 
