@@ -4,14 +4,11 @@ The data points will be summarised in terms of frequency.
 */
 function prepareData(geoData, treeData) {
     //TODO: cleanData(treeData) to remove all non-valids
-    waves = categorizeEdj(treeData);
-    //TODO: %
+    waves = categorizeEdj(treeData);    
 
     geoData.features.forEach(function(d) {
         d.properties.details = waves[d.properties.KantonId];
     });
-
-    return geoData;
 }
 
 
@@ -20,14 +17,14 @@ function categorizeEdj(treeData) {
     treeData = _.groupBy(treeData, "aes_canton");// from underscore library
 
     for (let k1 in treeData) {
-        let arr = treeData[k1];
-
-        for (let k2 in arr) {
-            arr[k2]["t1educ_class_1_r"] = categorize(arr[k2]["t1educ_class_1_r"]);
-            arr[k2]["t2educ_class_1_r"] = categorize(arr[k2]["t2educ_class_1_r"]);
-            arr[k2]["t3educ_class_1_r"] = categorize(arr[k2]["t3educ_class_1_r"]);
+        for (let k2 in treeData[k1]) {
+            treeData[k1][k2]["t1educ_class_1_r"] = categorize(treeData[k1][k2]["t1educ_class_1_r"]);
+            treeData[k1][k2]["t2educ_class_1_r"] = categorize(treeData[k1][k2]["t2educ_class_1_r"]);
+            treeData[k1][k2]["t3educ_class_1_r"] = categorize(treeData[k1][k2]["t3educ_class_1_r"]);
         }
-    }    
+    }   
+    
+    
     
     return count(treeData)
 }
@@ -50,7 +47,6 @@ function categorize(edj) {
 // Generalise this to be used on all data variables
 function count(treeData) {
     const waves = Array.apply(null, Array(27)).map(x => { return getWaves(); });
-    waves[0] = {};
 
     for (let i in treeData){
         let canton = treeData[i];
@@ -63,14 +59,35 @@ function count(treeData) {
             waves[i][1][x1] = waves[i][1][x1] + 1;
             waves[i][2][x2] = waves[i][2][x2] + 1;
             waves[i][3][x3] = waves[i][3][x3] + 1;
+
+            waves[i][1]["sum"] = waves[i][1]["sum"] + 1;
+            waves[i][2]["sum"] = waves[i][2]["sum"] + 1;
+            waves[i][3]["sum"] = waves[i][3]["sum"] + 1;
+
+            waves[0][1][x1] = waves[0][1][x1] + 1;
+            waves[0][2][x2] = waves[0][2][x2] + 1;
+            waves[0][3][x3] = waves[0][3][x3] + 1;
+
+            waves[0][1]["sum"] = waves[0][1]["sum"] + 1;
+            waves[0][2]["sum"] = waves[0][2]["sum"] + 1;
+            waves[0][3]["sum"] = waves[0][3]["sum"] + 1;
+        }
+        
+        for (let j = 1; j <= 3; j++) {
+            for (let key in waves[i][j]) {
+                if (key !== "sum") {
+                    let percentage = (waves[i][j][key] / waves[i][j]["sum"]) * 100;
+                    waves[i][j][key] = parseFloat(percentage.toFixed(2));                
+                }
+            }
         }
     }
-
+    
     return waves;
 }
 
 function getWaves() {
-    return {1 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0},
-            2 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0},
-            3 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0}};
+    return {1 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0, "sum" : 0},
+            2 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0, "sum" : 0},
+            3 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0, "sum" : 0}};
 }

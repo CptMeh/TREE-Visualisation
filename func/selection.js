@@ -1,20 +1,33 @@
 let container = d3.select("#wave-select");
 
-function addWaveDropdown() {
-  // Create the dropdown select element
+function addWaveDropdown(map) {
   const dropdown = container.append("select")
                             .attr("id", "wave-dropdown-button")
                             .attr("class", "wave-dropdown btn btn-secondary btn-lg btn-block")
                             .attr("label", "Select Wave")
-                            .on("change", function() { setWave(this.value) });
+                            .on("change", function() { map.setWave(this.value) ; map.drawMap();});
 
-// Add options to the dropdown
   dropdown.selectAll("option")
           .data([1, 2, 3])
           .enter()
           .append("option")
           .attr("value", d => d)
-          .text(d => vocab["wave"][lang] + " " + d);
-
-  setWave(1);
+          .text(d => vocab["survey wave"][lang] + " " + d);
 }
+
+function addVarSelection(map) {
+    const varSelect = container.append("select")
+                                .attr("id", "wave-dropdown-button")
+                                .attr("class", "wave-dropdown btn btn-secondary btn-lg btn-block")
+                                .attr("label", "Select Variable")
+                                .on("change", function() {map.setSelected(this.value); map.drawMap();});
+
+    varSelect.selectAll("option")
+              .data(["BB", "AB", "ZL", "NIA"])
+              .enter()
+              .append("option")
+              .attr("value", d => d)
+              .text(d => vocab[d][lang]);
+
+}
+
