@@ -89,8 +89,6 @@ class Map {
 
         let features = this.#geoData.features
         let maxScale = 0
-
-        console.log(features)
         
         for (let d in features) {
             let detail = features[d].properties.details[this.#wave][this.#selected]
@@ -141,7 +139,7 @@ class Map {
 
     // Creates the permanent description of the values, shown in the tool tip.
     permaDescr(canton, that) {
-        let descr = d3.select("#canton-descr")
+        let descr = d3.select("#canton-descr");
 
         descr.selectAll("p")
             .remove();
@@ -161,9 +159,15 @@ class Map {
         }
 
         for (let key in details[this.#wave]) {
+
             if (key != "sum"){
                 if (isTooltip) {
-                    label += "<p>" + key + ":  " + details[this.#wave][key] + "%</p>";
+                    if (key === this.#selected) {
+                        label += "<p style='color:red;'>" + key + ":  " + details[this.#wave][key] + "%</p>";
+                    } else {
+                        label += "<p>" + key + ":  " + details[this.#wave][key] + "%</p>";
+                    }
+
 
                 } else {
                     label += "<p>" + vocab[key][lang] + " (" + key + "):  " + details[this.#wave][key] + "%</p>";
@@ -181,10 +185,10 @@ class Map {
 
     initDescr() {
         let label = this.initLabel() + "<p><b> Kanton </b></p>" 
-                    + "<p>Nicht in Ausbildung (NIA): - "
-                    + "</p><p>Allgemeinausbildung (AB): - "
                     + "</p><p>Berufsausbildung (BB): - " 
-                    + "</p><p>Zwischenlösung (ZL): -</p>";
+                    + "</p><p>Allgemeinausbildung (AB): - "
+                    + "</p><p>Zwischenlösung (ZL): -</p>"
+                    + "<p>Nicht in Ausbildung (NIA): - ";
 
         d3.select("#canton-descr").html(label);
     }

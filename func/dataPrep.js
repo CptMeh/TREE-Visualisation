@@ -87,7 +87,7 @@ function count(treeData) {
 }
 
 function getWaves() {
-    return {1 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0, "sum" : 0},
-            2 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0, "sum" : 0},
-            3 : {"NIA" : 0, "AB" : 0, "BB" : 0, "ZL" : 0, "sum" : 0}};
+    return {1 : {"BB" : 0, "AB" : 0, "ZL" : 0, "NIA" : 0, "sum" : 0},
+            2 : {"BB" : 0, "AB" : 0, "ZL" : 0, "NIA" : 0, "sum" : 0},
+            3 : {"BB" : 0, "AB" : 0, "ZL" : 0, "NIA" : 0, "sum" : 0}};
 }
