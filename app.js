@@ -1,18 +1,6 @@
-const vocab = {"word" : ["german", "english", "french"],
-                "Kanton" : ["Kanton", "Canton", "Canton"],
-                "coloring" : ["Färbung", "Coloring", "?????????"],
-                "selected" : ["Ausgewählte", "selected", "??????????"],
-                "survey wave" : ["Befragungswelle", "Survey wave", "Vague d'enquête"],
-                "wave" : ["Welle", "Wave", "Vague"],
-                "variable" : ["NIA", "AB", "BB", "ZL"],
-                "NIA" : ["Nicht in Ausbildung", "Not in Education", "Pas en formation"],
-                "AB" : ["Allgemeinausbildung", "Vocational Training", "Formation professionnelle"],
-                "BB" : ["Berufsausbildung", "Professional- / Vocational Education", "Formation professionnelle en entreprise"],
-                "ZL" : ["Zwischenlösung", "Temporary Solution", "Solution temporaire"],
+const vocab = languageSelect();
 
-                };
-let lang = 0;
-
+console.log(vocab)
 // Source of geo data for map of Switzerland
 geoDataURL = "https://data.geo.admin.ch/ch.bafu.landesforstinventar-kantone/landesforstinventar-kantone/landesforstinventar-kantone_2056.geojson"
 
@@ -45,7 +33,7 @@ function createVisual(geoDataURL, DataURL) {
 function init(geoData, treeData) {
   prepareData(geoData, treeData);
 
-  let map = new Map(geoData, 1, 930, 650);
+  let map = new Map(geoData, 1, 930, 650, vocab);
   map.drawMap()
  
   addWaveDropdown(map);

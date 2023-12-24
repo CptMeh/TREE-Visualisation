@@ -14,10 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
 </head>
 
 <body>
   <!--Navbar-->
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <a class="navbar-brand px-4" href="#">TREE2-Visualisierung</a>
 
@@ -44,9 +46,9 @@
             Sprache
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="" onclick="loadLangFile('./func/lang/lang-de.js')">Deutsch</a>
-            <a class="dropdown-item" href="" onclick="loadLangFile('./func/lang/lang-en.js')">English</a>
-            <a class="dropdown-item" href="" onclick="loadLangFile('./func/lang/lang-fr.js')">Français</a>
+            <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 0); window.location.reload();">Deutsch</a>
+            <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 1); window.location.reload();">English</a>
+            <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 2); window.location.reload();">Français</a>
           </div>
         </li>
       </ul>
@@ -105,7 +107,7 @@
         zur Verfügung gestellt.
       </p>
     </div>
-    <script id="lang" src="./func/lang/lang-de.js"></script>
+    <script src="./func/languageSelect.js"></script>
     <script src="app.js"></script>
     <script src="./func/map.js"></script>
     <script src="./func/selection.js"></script>

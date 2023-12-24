@@ -18,13 +18,15 @@ class Map {
     #geoData;
     #selected;
     #path;
+    #vocab;
 
-    constructor(geoData, wave, width, height) {
+    constructor(geoData, wave, width, height, vocab) {
         this.#wave = wave;
         this.#width = width;
         this.#height = height;
         this.#geoData = geoData;
         this.#selected = "BB";
+        this.#vocab = vocab;
         let projection = d3.geoIdentity().reflectY(true).fitSize([this.#width, this.#height], this.#geoData);// The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
         
         this.#path = d3.geoPath().projection(projection); // Create the path for the projection
@@ -34,6 +36,7 @@ class Map {
 
         this.drawMap();
         this.initDescr();
+
     }   
 
     /**
@@ -147,11 +150,12 @@ class Map {
     description(canton, isTooltip) {
         let details = canton.properties.details;
         let label = this.initLabel(isTooltip);
+        const lang = localStorage.getItem('lang');
 
         switch(lang) {
-            case 0 : label += "<p><b>" + canton.properties.KantonName_de + "</b></p>"; break;
-            case 1 : label += "<p><b>" + canton.properties.KantonName_en + "</b></p>"; break;
-            case 2 : label += "<p><b>" + canton.properties.KantonName_fr + "</b></p>"; break;
+            case "0" : label += "<p><b>" + canton.properties.KantonName_de + "</b></p>"; break;
+            case "1" : label += "<p><b>" + canton.properties.KantonName_en + "</b></p>"; break;
+            case "2" : label += "<p><b>" + canton.properties.KantonName_fr + "</b></p>"; break;
         }
 
         for (let key in details[this.#wave]) {
@@ -164,9 +168,8 @@ class Map {
                         label += "<p>" + key + ":  " + details[this.#wave][key] + "%</p>";
                     }
 
-
                 } else {
-                    label += "<p>" + vocab[key][lang] + " (" + key + "):  " + details[this.#wave][key] + "%</p>";
+                    label += "<p>" + this.#vocab[key] + " (" + key + "):  " + details[this.#wave][key] + "%</p>";
                 }
             }
         }
@@ -175,17 +178,18 @@ class Map {
     }
 
     initLabel(isTooltip) {
-        return isTooltip ? "<p><b>" + vocab["wave"][lang] + " " + this.#wave + "</b></p>" : 
-                            "<p><b>" + vocab["selected"][lang] + " " + vocab["survey wave"][lang] + ": " + this.#wave + "</b></p>";
+        return isTooltip ? "<p><b>" + this.#vocab["wave"] + " " + this.#wave + "</b></p>" : 
+                            "<p><b>" + this.#vocab["selected"] + " " + this.#vocab["survey wave"] + ": " + this.#wave + "</b></p>";
     }
 
     initDescr() {
-        let label = this.initLabel() + "<p><b> Kanton </b></p>" 
-                    + "<p>" + vocab["BB"][lang] + " (BB): - </p>" 
-                    + "<p>" + vocab["AB"][lang] + " (AB): - </p>" 
-                    + "<p>" + vocab["ZL"][lang] + " (ZL): - </p>" 
-                    + "<p>" + vocab["NIA"][lang] + " (NIA): - </p>";
+        let label = this.initLabel() + "<p><b>" + this.#vocab["Kanton"] + "</b></p>" 
+                    + "<p>" + this.#vocab["BB"] + " (BB): - </p>" 
+                    + "<p>" + this.#vocab["AB"] + " (AB): - </p>" 
+                    + "<p>" + this.#vocab["ZL"] + " (ZL): - </p>" 
+                    + "<p>" + this.#vocab["NIA"] + " (NIA): - </p>";
 
+        console.log(this.#vocab["BB"])
         d3.select("#canton-descr").html(label);
     }
 

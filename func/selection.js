@@ -12,7 +12,7 @@ function addWaveDropdown(map) {
           .enter()
           .append("option")
           .attr("value", d => d)
-          .text(d => vocab["survey wave"][lang] + " " + d);
+          .text(d => vocab["survey wave"] + " " + d);
 }
 
 function addVarSelection(map) {
@@ -27,7 +27,7 @@ function addVarSelection(map) {
               .enter()
               .append("option")
               .attr("value", d => d)
-              .text(d => vocab[d][lang]);
+              .text(d => vocab[d]);
 
 }
 
