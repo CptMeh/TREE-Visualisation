@@ -189,7 +189,6 @@ class Map {
                     + "<p>" + this.#vocab["ZL"] + " (ZL): - </p>" 
                     + "<p>" + this.#vocab["NIA"] + " (NIA): - </p>";
 
-        console.log(this.#vocab["BB"])
         d3.select("#canton-descr").html(label);
     }
 

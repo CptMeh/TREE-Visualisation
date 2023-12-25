@@ -1,6 +1,5 @@
 const vocab = languageSelect();
 
-console.log(vocab)
 // Source of geo data for map of Switzerland
 geoDataURL = "https://data.geo.admin.ch/ch.bafu.landesforstinventar-kantone/landesforstinventar-kantone/landesforstinventar-kantone_2056.geojson"
 
@@ -41,15 +40,14 @@ function init(geoData, treeData) {
 
 }
 
-function loadLangFile(file) {
-  d3.select("#lang")
-    .remove();
-  
 
-  d3.select("#main")
-    .append("script")
-    .attr("id", "lang")
-    .attr("src", file);
-  
-  console.log(file)
-}
+d3.select("#descr")
+  .html("<h2>" + vocab.descr[0] + "</h2>" 
+        + "<h4 class='mt-5'>" + vocab.descr[1] + "</h4>" 
+        + "<p>" + vocab.descr[2] + "</p>"
+        + "<h4 class='mt-4'>" + vocab.descr[3] + "</h4>"
+        + "<p>" + vocab.descr[4] + "</p>"
+        + "<h4 class='mt-4'>" + vocab.descr[5] + "</h4>"
+        + "<p>" + vocab.descr[6] + "</p>"
+        + "<h4 class='mt-4'>" + vocab.descr[7] + "</h4>"
+        + "<p>" + vocab.descr[8] + "</p>");
