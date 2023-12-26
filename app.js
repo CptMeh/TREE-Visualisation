@@ -1,7 +1,7 @@
 const vocab = languageSelect();
 
 // Source of geo data for map of Switzerland
-const backupURL = "https://data.geo.admin.ch/ch.bafu.landesforstinventar-kantone/landesforstinventar-kantone/landesforstinventar-kantone_2056.geojson"
+const backupURL = "https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/geo-data/landesforstinventar-kantone_2056.geojson"
 const geoDataURL = "./data/geo-data/landesforstinventar-kantone_2056.geojson"
 
 // Source for the Currated Tree2 data
@@ -24,7 +24,6 @@ function createAll(geoDataURL, treeDataURL, backupURL) {
 }
 
 function init(geoData, treeData) {
-  console.log(geoData)
   prepareData(geoData, treeData);
 
   let map = new Map(geoData, 1, 930, 650, vocab);
@@ -37,7 +36,7 @@ function init(geoData, treeData) {
 
 
 d3.select("#descr")
-  .html("<h2>" + vocab.descr[0] + "</h2>" 
+    .html("<h2>" + vocab.descr[0] + "</h2>" 
         + "<h4 class='mt-5'>" + vocab.descr[1] + "</h4>" 
         + "<p>" + vocab.descr[2] + "</p>"
         + "<h4 class='mt-4'>" + vocab.descr[3] + "</h4>"
