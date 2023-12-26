@@ -1,15 +1,16 @@
 const vocab = languageSelect();
 
 // Source of geo data for map of Switzerland
-backupURL = "https://data.geo.admin.ch/ch.bafu.landesforstinventar-kantone/landesforstinventar-kantone/landesforstinventar-kantone_2056.geojson"
-geoDataURL = "./landesforstinventar-kantone_2056.geojson"
+const backupURL = "https://data.geo.admin.ch/ch.bafu.landesforstinventar-kantone/landesforstinventar-kantone/landesforstinventar-kantone_2056.geojson"
+const geoDataURL = "./landesforstinventar-kantone_2056.geojson"
 
 // Source for the Currated Tree2 data
-treeDataURL = "https://raw.githubusercontent.com/CptMeh/OpenData/ramon/D3.js_implementation/Daten/currated_data.csv"
-createVisual(geoDataURL, treeDataURL, backupURL)
+const backupdTreeURL = "https://raw.githubusercontent.com/CptMeh/OpenData/ramon/D3.js_implementation/Daten/currated_data.csv"
+const treeDataURL = "./data/study-data/currated_data.csv"
+createAll(geoDataURL, treeDataURL, backupURL)
 
 
-function createVisual(geoDataURL, treeDataURL, backupURL) {
+function createAll(geoDataURL, treeDataURL, backupURL) {
   // Get the map- and TREE-data and check if everything worked. Then use the drawMap function to render the map.
   d3.json(geoDataURL).then(function(geoData) {
     // GeoJSON data loaded successfully
@@ -18,18 +19,6 @@ function createVisual(geoDataURL, treeDataURL, backupURL) {
       init(geoData, treeData);
     }).catch(function(error) {
       console.error("Something went wrong loading the tree data: " + error);
-    });
-  }).catch(function(error) {
-    // If there is an error loading the primary GeoJSON, try the backup
-    console.error("Something went wrong loading the primary GeoJSON: " + error);
-    d3.json(backupURL).then(function(geoData) {
-      d3.csv(treeDataURL).then(function(treeData) {
-        init(geoData, treeData);
-      }).catch(function(error) {
-        console.error("Something went wrong loading the tree data: " + error);
-      });
-    }).catch(function(error) {
-      console.error("Something went wrong loading the backup GeoJSON: " + error);
     });
   });
 }
