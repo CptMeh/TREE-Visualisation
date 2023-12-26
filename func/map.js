@@ -71,8 +71,8 @@ class Map {
             .style("cursor", "pointer");    // maybe use .classed("canton-highligted", true); ?    
             
             tooltip.html(map.description(d, true)) 
-                    .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY) + "px")
+                    .style("left", (d.pageX) + "px")
+                    .style("top", (d.pageY) + "px")
                     .style("opacity", 0.9) // makes tooltip visible
                     .style("z-index", "2");
         };
@@ -137,20 +137,21 @@ class Map {
     
 
     // Creates the permanent description of the values, shown in the tool tip.
-    permaDescr(canton, that) {
+    permaDescr(event, that) {
         let descr = d3.select("#canton-descr");
 
         descr.selectAll("p")
             .remove();
 
-        descr.html(that.description(canton, false));
+        descr.html(that.description(event, false));
     }
 
     // Creates the contents of the tool tip / the description.
-    description(canton, isTooltip) {
-        let details = canton.properties.details;
+    description(event, isTooltip) {
+        const canton = event.target.__data__;
+        const details = canton.properties.details;
+        const lang = localStorage.getItem('lang') || "0";
         let label = this.initLabel(isTooltip);
-        const lang = localStorage.getItem('lang');
 
         switch(lang) {
             case "0" : label += "<p><b>" + canton.properties.KantonName_de + "</b></p>"; break;
