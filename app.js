@@ -2,10 +2,10 @@ const vocab = languageSelect();
 
 // Source of geo data for map of Switzerland
 const backupURL = "https://data.geo.admin.ch/ch.bafu.landesforstinventar-kantone/landesforstinventar-kantone/landesforstinventar-kantone_2056.geojson"
-const geoDataURL = "./landesforstinventar-kantone_2056.geojson"
+const geoDataURL = "./data/geo-data/landesforstinventar-kantone_2056.geojson"
 
 // Source for the Currated Tree2 data
-const backupdTreeURL = "https://raw.githubusercontent.com/CptMeh/OpenData/ramon/D3.js_implementation/Daten/currated_data.csv"
+const backupdTreeURL = "https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/study-data/currated_data.csv"
 const treeDataURL = "./data/study-data/currated_data.csv"
 createAll(geoDataURL, treeDataURL, backupURL)
 
