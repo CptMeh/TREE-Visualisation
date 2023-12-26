@@ -29,19 +29,14 @@ function init(geoData, treeData) {
   let map = new Map(geoData, 1, 930, 650, vocab);
   map.drawMap()
  
+  // Dropdown menues
   addWaveDropdown(map);
   addVarSelection(map);
 
+  // HTML text
+  HTMLtitle();
+  HTMLbanner();
+  HTMLdescription();
+  HTMLfooter();
 }
 
-
-d3.select("#descr")
-    .html("<h2>" + vocab.descr[0] + "</h2>" 
-        + "<h4 class='mt-5'>" + vocab.descr[1] + "</h4>" 
-        + "<p>" + vocab.descr[2] + "</p>"
-        + "<h4 class='mt-4'>" + vocab.descr[3] + "</h4>"
-        + "<p>" + vocab.descr[4] + "</p>"
-        + "<h4 class='mt-4'>" + vocab.descr[5] + "</h4>"
-        + "<p>" + vocab.descr[6] + "</p>"
-        + "<h4 class='mt-4'>" + vocab.descr[7] + "</h4>"
-        + "<p>" + vocab.descr[8] + "</p>");

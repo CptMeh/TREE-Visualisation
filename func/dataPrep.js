@@ -47,7 +47,6 @@ function categorizeEdj(treeData) {
             orderedData[k1][k2]["t3educ_class_1_r"] = categorize(orderedData[k1][k2]["t3educ_class_1_r"]);
         }
     }   
-    console.log(orderedData)
 
     weights = getWeights(orderedData);    
     

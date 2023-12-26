@@ -21,7 +21,7 @@
   <!--Navbar-->
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand px-4" href="#">TREE2-Visualisierung</a>
+    <a id="banner-title" class="navbar-brand px-4" href="#"></a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -30,21 +30,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link px-4" href="#map">Map</a>
+          <a id="banner-map" class="nav-link px-4" href="#map"></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link px-4" href="#descr">Beschreibung</a>
+          <a id="banner-descr" class="nav-link px-4" href="#descr"></a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link px-4" href="#dev">Developers</a>
+          <a id="banner-dev" class="nav-link px-4" href="#dev"></a>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sprache
-          </a>
+          <a id="banner-lang" class="nav-link dropdown-toggle px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 0); window.location.reload();">Deutsch</a>
             <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 1); window.location.reload();">English</a>
@@ -57,7 +55,7 @@
 
   <div id="main" class="container mb-2">
     </br>
-    <h1 class="p-1 mt-5">Visualierung der TREE2-Studie - kantonal</h1>
+    <h1 id="map-title" class="p-1 mt-5"></h1>
     </br>
 
     <div id="map-card" class="container">    
@@ -103,10 +101,6 @@
     </div>
 
     <div id="tree" class="col p-3 mb-3">
-      <h5>TREE-Studie</h5>
-      <dd>Universität Bern</dd>
-      <dd>Institut für Soziologie</dd>
-      <a class="small" href="https://www.tree.unibe.ch/">www.tree.unibe.ch</a>
     </div>
 
   </footer>
