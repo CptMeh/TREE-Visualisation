@@ -103,7 +103,7 @@ function count(orderedData, weights) {
             for (let key in waves[i][j]) {
                 if (key !== "sum") {
                     let percentage = (waves[i][j][key] / waves[i][j]["sum"]) * 100;
-                    waves[i][j][key] = parseFloat(percentage.toFixed(2));                
+                    waves[i][j][key] = parseFloat(percentage.toFixed(1));                
                 }
             }
         }
