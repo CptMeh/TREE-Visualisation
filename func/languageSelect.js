@@ -117,7 +117,6 @@ const frenchVocab = {
             + "</ul>"],
             ["Étude TREE", 
             "TREE (Transitions de l'Éducation Initiale à la Vie Active) est une enquête longitudinale suisse sur la transition des jeunes de l'école à la vie adulte. L'étude se concentre sur les parcours éducatifs et professionnels après la fin de l'école obligatoire. La première échantillon (TREE1) comprend plus de 6'000 jeunes qui ont participé au projet PISA (Programme for International Student Assessment) en 2000 et ont terminé l'école obligatoire la même année. L'échantillon est représentatif au niveau national et linguistique. Un second échantillon (TREE2) de près de 10'000 jeunes est interrogé longitudinalement depuis 2016. Ainsi, TREE est l'une des rares études multi-cohortes au monde qui permet des analyses comparatives entre cohortes."],
-            
             ["Informations supplémentaires",
             "Cette visualisation a été développée par Marlene Kulowatz et Ramon Näf dans le cadre d'un projet pour le cours \"Open Data and Open Government\" à l'Université de Berne au semestre de printemps 2023. Les données de l'étude TREE ont été fournies par <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a>."]
             ],
@@ -127,7 +126,13 @@ const frenchVocab = {
 
 
 function languageSelect() {
-    const lang = localStorage.getItem('lang');        
+    let lang;
+
+    if (localStorage.getItem('lang') !== null) {
+        lang = localStorage.getItem('lang');
+    } else {
+        lang = 1;
+    }        
 
     switch(lang) {
         case "0" : return germanVocab; 
