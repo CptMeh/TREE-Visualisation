@@ -9,12 +9,6 @@ const COLORING = {"NIA" : "#a00000",
 
 /**
  * Responsible for creating and maintaining a visualisation of the Tree2-Study data by binding it to the regions of the given Geo data.
- *  
- * @param {Array} geoData   
- * @param {int} wave        the selected wave to be visualised
- * @param {int} width       width of the map
- * @param {int} height      height of the map
- * @param {dict} vocab      the vocabulary used for the chosen language
  */
 class Map {   
     #wave; 
@@ -24,13 +18,11 @@ class Map {
     #selected;  // the currently selected variable used to colour in the map parts
     #path_projection;      // the paths to the individual map projections, using d3.js
     #vocab;
-    #SVG = d3.select("#map")
-            .append("svg")
-            .classed("svg-container", true) 
-            .classed("col", true) 
-            .attr("preserveAspectRatio", "xMinYMin")
-            .attr("viewBox", "0 0 900 700");
-
+    #SVG;
+    #map = d3.select("#maps")
+                .append("div")
+                .attr("class", "row container")
+                
     
 
     /**
@@ -53,8 +45,19 @@ class Map {
         
         this.#path_projection = d3.geoPath().projection(projection); // Create the path for the projection
         
-        this.#SVG.attr("width", width)
-            .attr("height", height);
+        // Dropdown menue
+        addVarSelection(this.#map, this);
+
+
+        this.#SVG = this.#map.append("svg")
+                            .classed("svg-container", true) 
+                            .classed("col", true) 
+                            .attr("preserveAspectRatio", "xMinYMin")
+                            .attr("viewBox", "0 0 900 700")
+                            .attr("width", width)
+                            .attr("height", height);
+
+
 
         this.drawMap();
         this.initDescr();
@@ -127,6 +130,8 @@ class Map {
                             .domain([0, maxScale])  // Assuming the percentage ranges from 0 to 100
                             .range(["#FFFFFF", COLORING[this.#selected]]); 
 
+
+
         // This defines the crosshatch pattern, for when a value is 0.
         this.#SVG.append("defs")
             .append("pattern")
@@ -162,6 +167,8 @@ class Map {
                     .attr("alignment-baseline", "central")
                     .style("font-size", "12px") // Adjust font size as needed
                     .style("fill", "black"); // Set text color
+
+
     }
 
     

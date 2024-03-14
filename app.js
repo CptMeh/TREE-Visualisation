@@ -68,11 +68,6 @@ function init(geoData, treeData) {
   map_wave2.drawMap();
   map_wave3.drawMap();
 
- 
-  // Dropdown menues
-  addWaveDropdown(map);
-  addVarSelection(map);
-
   // HTML text
   HTMLtitle();
   HTMLbanner();

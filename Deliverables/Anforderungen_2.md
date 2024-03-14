@@ -1,12 +1,21 @@
 # Deliverables
 
+## Variablen Korigieren
+### TODO:
+- Die Zuweisung der Umfrage-Variablen ist falsch. Dies muss korrigiert werden. 
+
 ## Befragungswellen-Filter entfernen
+### TODO:
+- Entfernen
+- Evtl. anpassen an neue Gebräuche?
 
 ## Separate Karten pro Befragungswelle
 ### TODO:
-- Jede Karte soll ihr eigenes div erstellen, sonst überschreiben sie sich einfach
+- ~~Jede Karte soll ihr eigenes svg erstellen, sonst überschreiben sie sich einfach~~
 
 ## Kantone Beschriften (mit Kürzel)
+### TODO:
+- Zeige die Kürzel auf den Kantonen.
 
 ## Gesammtschweizerische Tabelle neben jede Karten
 ### TODO:
