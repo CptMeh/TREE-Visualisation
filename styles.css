@@ -5,21 +5,31 @@
 
 #end-card {
   background-color: #555;
+  width: 101.7%;
+  height: 102%;
+  font-size: 2vw;
 }
 
 #dev {
   text-align: left;
   color: lightgray;
+  font-size: 2vw;
 }
 
 #tree {
   text-align: right;
   color: lightgray;
+  font-size: 2vw;
 }
 
 #git {
   text-align: center;
   color: lightgray;
+  font-size: 2vw;
+}
+
+h5 {
+  font-size: 2vw; 
 }
 
 .full-size {
@@ -46,13 +56,8 @@
 
 .button-item button.active {
     background-color: #bcbcbd; 
-  }
+}
 
 .button-item2 button.active {
     background-color: #bbbbbd;
-  }
-
-
-.small-text {
-  font-size: 14px;
 }

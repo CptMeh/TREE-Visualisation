@@ -4,9 +4,6 @@ const COLORING = {"NIA" : "#a00000",
                     "ZL" : "#e48100"}
 
 
-// TODO: Make it so the map object is appended to its own div. Not sure yet how this will work with SVG object.                 
-
-
 /**
  * Responsible for creating and maintaining a visualisation of the Tree2-Study data by binding it to the regions of the given Geo data.
  */
@@ -28,52 +25,47 @@ class Map {
      * 
      * @param {Array} geoData   the geo data of the map to be visualised
      * @param {int} wave        the selected questionair wave of the Tree2 Studie
-     * @param {int} width       width of the map
-     * @param {int} height      height of the map
      * @param {dict} vocab      the vocabulary of all the text in the chosen language 
      */
-    constructor(geoData, wave, width, height, vocab) {
+    constructor(geoData, wave, vocab) {
         this.#wave = wave;
-        this.#width = width;
-        this.#height = height;
+        this.#width = window.innerWidth*0.8;
+        this.#height = this.#width*0.8;
         this.#geoData = geoData;
         this.#selected = "BB"; // Chose BB to be selected at the start
         this.#vocab = vocab;
+    }   
+
+    setUpContainers() {
         this.#container = d3.select("#maps")
-                            .append("div")
-                            .attr("id", "container_" + wave)
-                            .attr("class", "row container");
+            .append("div")
+            .attr("id", "container_" + this.#wave)
+            .attr("class", "row container");
 
         this.#map_div = this.#container
-                            .append("div")
-                            .attr("id", "map_" + wave)
-                            .attr("class", "col order-1");
+            .append("div")
+            .attr("id", "map_" + this.#wave)
+            .attr("class", "col order-1");
 
-        
         let projection = d3.geoIdentity()
-                            .reflectY(true)
-                            .fitSize([this.#width, this.#height], this.#geoData);// The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
-        
-        this.#path_projection = d3.geoPath()
-                                    .projection(projection); // Create the path for the projection
-        
-        this.#SVG = this.#map_div
-                            .append("svg")
-                            .classed("svg-container", true) 
-                            .classed("col", true) 
-                            .attr("preserveAspectRatio", "xMinYMin")
-                            .attr("viewBox", "0 0 900 700")
-                            .attr("width", width)
-                            .attr("height", height);
+            .reflectY(true)
+            .fitSize([this.#width, this.#height], this.#geoData); // The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
 
-        this.drawMap();
-        this.initDescr();
-    }   
+        this.#path_projection = d3.geoPath()
+            .projection(projection); // Create the path for the projection
+
+        this.#SVG = this.#map_div
+            .append("svg")
+            .classed("col", true)
+            .attr("width", this.#width)
+            .attr("height", this.#height);
+    }
 
     /**
      * Renders the map, adds the hover and click functionalities to the individual parts of the map and colours in the individual parts of the map.
      **/  
     drawMap() {
+
         let tooltip = this.#map_div
                             .append("div")
                                 .attr("id", "tooltip")
@@ -88,10 +80,10 @@ class Map {
                                 .style("overflow", "scroll")
                                 .style("pointer-events", "none"); 
 
-        let this_map = this; // To avoid confusion for the event listeners, since "this" sometimes has a different context when using d3.js
+        let this_map_instance = this; // To avoid confusion for the event listeners, since "this" sometimes has a different context when using d3.js
 
         let mouseclick = function(d) { // d is the canton data
-            this_map.permaDescr(d, this_map);
+            this_map_instance.permaDescr(d, this_map_instance);
         };
 
 
@@ -101,7 +93,7 @@ class Map {
             .style("stroke-width", 2)
             .style("cursor", "pointer");      
             
-            tooltip.html(this_map.description(d, true)) 
+            tooltip.html(this_map_instance.description(d, true)) 
                     .style("left", (d.pageX) + "px")
                     .style("top", (d.pageY) + "px")
                     .style("opacity", 0.9) // makes tooltip visible
@@ -174,10 +166,11 @@ class Map {
                     .style("font-size", "12px") // Adjust font size as needed
                     .style("fill", "black"); // Set text color
 
-
+        this.initDescr();
     }
 
     
+
 
     /**  
      * Creates the permanent description of the values, shown in the tool tip.
@@ -261,6 +254,14 @@ class Map {
                     + "<p>" + this.#vocab["NIA"] + " (NIA): - </p>";
 
         d3.select("#canton-descr").html(label);
+    }
+
+    toJSONFormat() {
+        return {
+            "geoData" : this.#geoData, 
+            "wave" : this.#wave, 
+            "vocab" : vocab
+        }
     }
 
     setWave(wave) {

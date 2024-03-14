@@ -13,7 +13,6 @@ const backupdTreeURL = "https://raw.githubusercontent.com/CptMeh/TREE-Visualisat
 // Local URL for Tree2 data
 const treeDataURL = "./data/study-data/currated_data.csv"
 
-
 //createAll(geoDataURL, treeDataURL)
 createAll(backupURL, backupdTreeURL)
 
@@ -46,8 +45,6 @@ function createAll(geoDataURL, treeDataURL) {
  * - Initialises the selection menues for the selection of the waves.
  * - Dynamically generates the text of the Website in the chosen Language. 
  * 
- * <s>@link selection#addWaveDropdown</s>
- * <s>@link selection#addVarSelection</s>
  * @link languageSelect#HTMLtitle
  * @link languageSelect#HTMLbanner
  * @link languageSelect#HTMLdescrition
@@ -58,19 +55,23 @@ function createAll(geoDataURL, treeDataURL) {
 **/
 function init(geoData, treeData) {
   prepareData(geoData, treeData);
-  
-  let map_wave1 = new Map(geoData, 1, 930, 650, vocab);
-  let map_wave2 = new Map(geoData, 2, 930, 650, vocab);
-  let map_wave3 = new Map(geoData, 3, 930, 650, vocab); 
 
-  addVarSelection(map_wave1);
-  map_wave1.drawMap();
- 
-  addVarSelection(map_wave2);
-  map_wave2.drawMap();
+  if (localStorage.getItem("geoData") == null) {
+    localStorage.geoData = JSON.stringify(geoData);
+  }
+  console.log(geoData)
+  console.log(localStorage.geoData)
 
-  addVarSelection(map_wave3);
-  map_wave3.drawMap();
+  visualise();
+
+
+  // For some reason the maps don't resize on widow resizing. So, now they just get deleted an drecreated...
+  window.addEventListener('resize', () => {
+    clearMaps();
+    visualise();
+  });
+
+  addTable(maps)
 
   // HTML text
   HTMLtitle();
@@ -79,6 +80,25 @@ function init(geoData, treeData) {
   HTMLfooter();
 }
 
+function visualise() {
+  let geoData = JSON.parse(localStorage.geoData);
+  let maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
+
+
+  for (const m of maps) {
+    m.setUpContainers();
+    m.drawMap();
+    addVarSelection(m);
+  }
+
+}
+
+function clearMaps() {
+  d3.select("#maps")
+    .selectAll("*")
+    .remove();
+
+}
 
 function addVarSelection(map) {
   const varSelect = map.getContainer()
@@ -95,4 +115,8 @@ function addVarSelection(map) {
             .attr("value", d => d)
             .text(d => vocab[d]);
 
+}
+
+function addTable(maps) {
+  //select their containers
 }
