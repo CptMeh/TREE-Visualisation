@@ -18,11 +18,9 @@ class Map {
     #selected;  // the currently selected variable used to colour in the map parts
     #path_projection;      // the paths to the individual map projections, using d3.js
     #vocab;
+    #container; // Contains the map_div, the wave select, and the data table
+    #map_div; // Only contains the svg for the map and the tooltips
     #SVG;
-    #map = d3.select("#maps")
-                .append("div")
-                .attr("class", "row container")
-                
     
 
     /**
@@ -41,15 +39,26 @@ class Map {
         this.#geoData = geoData;
         this.#selected = "BB"; // Chose BB to be selected at the start
         this.#vocab = vocab;
-        let projection = d3.geoIdentity().reflectY(true).fitSize([this.#width, this.#height], this.#geoData);// The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
-        
-        this.#path_projection = d3.geoPath().projection(projection); // Create the path for the projection
-        
-        // Dropdown menue
-        addVarSelection(this.#map, this);
+        this.#container = d3.select("#maps")
+                            .append("div")
+                            .attr("id", "container_" + wave)
+                            .attr("class", "row container");
 
+        this.#map_div = this.#container
+                            .append("div")
+                            .attr("id", "map_" + wave)
+                            .attr("class", "col order-1");
 
-        this.#SVG = this.#map.append("svg")
+        
+        let projection = d3.geoIdentity()
+                            .reflectY(true)
+                            .fitSize([this.#width, this.#height], this.#geoData);// The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
+        
+        this.#path_projection = d3.geoPath()
+                                    .projection(projection); // Create the path for the projection
+        
+        this.#SVG = this.#map_div
+                            .append("svg")
                             .classed("svg-container", true) 
                             .classed("col", true) 
                             .attr("preserveAspectRatio", "xMinYMin")
@@ -57,30 +66,27 @@ class Map {
                             .attr("width", width)
                             .attr("height", height);
 
-
-
         this.drawMap();
         this.initDescr();
-
     }   
 
     /**
      * Renders the map, adds the hover and click functionalities to the individual parts of the map and colours in the individual parts of the map.
      **/  
     drawMap() {
-        let tooltip = d3.select("#map")
-                        .append("div")
-                            .attr("id", "tooltip")
-                            .style("opacity", 0)
-                            .attr("class", "tooltip")
-                            .style("background-color", "white")
-                            .style("border", "solid")
-                            .style("border-width", "2px")
-                            .style("border-radius", "5px")
-                            .style("padding", "5px")
-                            .style("position","absolute")
-                            .style("overflow", "scroll")
-                            .style("pointer-events", "none"); 
+        let tooltip = this.#map_div
+                            .append("div")
+                                .attr("id", "tooltip")
+                                .style("opacity", 0)
+                                .attr("class", "tooltip")
+                                .style("background-color", "white")
+                                .style("border", "solid")
+                                .style("border-width", "2px")
+                                .style("border-radius", "5px")
+                                .style("padding", "5px")
+                                .style("position","absolute")
+                                .style("overflow", "scroll")
+                                .style("pointer-events", "none"); 
 
         let this_map = this; // To avoid confusion for the event listeners, since "this" sometimes has a different context when using d3.js
 
@@ -275,6 +281,14 @@ class Map {
 
     setSelected(selected) {
         this.#selected = selected;
+    }
+
+    getContainer() {
+        return this.#container;
+    }
+
+    getMapDiv() {
+        return this.#map_div;
     }
 
     getSVG() {

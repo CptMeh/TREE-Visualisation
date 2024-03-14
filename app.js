@@ -58,14 +58,18 @@ function createAll(geoDataURL, treeDataURL) {
 **/
 function init(geoData, treeData) {
   prepareData(geoData, treeData);
-
+  
   let map_wave1 = new Map(geoData, 1, 930, 650, vocab);
- 
   let map_wave2 = new Map(geoData, 2, 930, 650, vocab);
   let map_wave3 = new Map(geoData, 3, 930, 650, vocab); 
 
+  addVarSelection(map_wave1);
   map_wave1.drawMap();
+ 
+  addVarSelection(map_wave2);
   map_wave2.drawMap();
+
+  addVarSelection(map_wave3);
   map_wave3.drawMap();
 
   // HTML text
@@ -75,3 +79,20 @@ function init(geoData, treeData) {
   HTMLfooter();
 }
 
+
+function addVarSelection(map) {
+  const varSelect = map.getContainer()
+                          .append("select")
+                              .attr("id", "dropdown-button")
+                              .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
+                              .attr("label", "Select Variable")
+                              .on("change", function() {map.setSelected(this.value); map.drawMap();});
+
+  varSelect.selectAll("option")
+            .data(["BB", "AB", "ZL", "NIA"])
+            .enter()
+            .append("option")
+            .attr("value", d => d)
+            .text(d => vocab[d]);
+
+}
