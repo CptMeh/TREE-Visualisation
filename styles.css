@@ -1,12 +1,11 @@
 #canton-descr {
-  
   float:right;
 }
 
 
 /* Style for the footer */
 #end-card {
-  background-color: lightgray; /* Light gray background */
+  background-color: gray; /* Light gray background */
 }
 
 /* Style for each column */
@@ -14,6 +13,7 @@
 #git,
 #tree {
   padding: 20px; /* Adjust padding as needed */
+  color: white;
 }
 
 /* Style for headings within each column */
@@ -33,7 +33,6 @@
 /* Style for links within the git column */
 #git a {
   display: block; /* Make the link a block element */
-  text-align: center; /* Center-align the link */
   color: inherit; /* Inherit text color from parent */
   text-decoration: none; /* Remove underline */
 }

@@ -13,7 +13,6 @@ class Map {
     #height;
     #geoData;
     #selected;  // the currently selected variable used to colour in the map parts
-    #path_projection;      // the paths to the individual map projections, using d3.js
     #vocab;
     #container; // Contains the map_div, the wave select, and the data table
     #map_div; // Only contains the svg for the map and the tooltips
@@ -48,18 +47,11 @@ class Map {
             .attr("id", "map_" + this.#wave)
             .attr("class", "col order-1");
 
-        let projection = d3.geoIdentity()
-            .reflectY(true) // Needs to be flipped, because for some reason the map is upside down on its own...
-            .fitSize([this.#width, this.#height], this.#geoData); // The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
-
-        this.#path_projection = d3.geoPath()
-            .projection(projection); // Create the path for the projection
-
         this.#SVG = this.#map_div
-            .append("svg")
-            .classed("col", true)
-            .attr("width", this.#width)
-            .attr("height", this.#height);
+                        .append("svg")
+                        .classed("col", true)
+                        .attr("width", this.#width)
+                        .attr("height", this.#height);
     }
 
     /**
@@ -84,7 +76,6 @@ class Map {
                                 .style("pointer-events", "none"); 
 
         let this_map_instance = this; // To avoid confusion for the event listeners, since "this" sometimes has a different context when using d3.js
-
         let mouseclick = function(d) { // d is the canton data
             this_map_instance.permaDescr(d, this_map_instance);
         };
@@ -112,7 +103,7 @@ class Map {
                     .style("z-index", "0"); // makes it go behind the cantons, so it doesn't block them
         };
 
-        this.#SVG.selectAll("path").remove();
+        //this.#SVG.selectAll("path").remove();
         
         let features = this.#geoData.features
         let maxScale = 0
@@ -131,7 +122,12 @@ class Map {
                             .domain([0, maxScale])  // Assuming the percentage ranges from 0 to 100
                             .range(["#FFFFFF", COLORING[this.#selected]]); 
 
+        let projection = d3.geoIdentity()
+                            .reflectY(true) // Needs to be flipped, because for some reason the map is upside down on its own...
+                            .fitSize([this.#width, this.#height], this.#geoData); // The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
 
+        let path_projection = d3.geoPath()
+                                    .projection(projection); // Create the path for the projection
 
         // This defines the crosshatch pattern, for when a value is 0.
         this.#SVG.append("defs")
@@ -154,20 +150,28 @@ class Map {
             .append("path")
                 .attr("class", "canton")
                 .attr("id", function(d) { return d.properties.KantonId; })
-                .attr("d", this.#path_projection)
+                .attr("d", path_projection)
                 .on("mousemove", mousemove)
                 .on("click", mouseclick)
                 .on("mouseleave", mouseleave)
                 .style("stroke-width", 0.5)
                 .style("stroke", "white")
-                .style("fill", d => {return d.properties.details[this.#wave][this.#selected] === 0 ? "url(#crosshatch)" : colorScale(d.properties.details[this.#wave][this.#selected]); })
+                .style("fill", d => {
+                    return d.properties.details[this.#wave][this.#selected] === 0 ? "url(#crosshatch)" : colorScale(d.properties.details[this.#wave][this.#selected]);
+                });
+        
+        // Add Canton short-hand as text
+        this.#SVG.selectAll("text")
+                .data(this.#geoData.features)
+                .enter()
                 .append("text")
-
-                    .text(d => {return d.properties.alternateName})
-                    .attr("text-anchor", "middle") // Centers the text
-                    .attr("alignment-baseline", "central")
-                    .style("font-size", "12px") // Adjust font size as needed
-                    .style("fill", "black"); // Set text color
+                .text(d => { return d.properties.alternateName; })
+                .attr("x", function(d) { return path_projection.centroid(d)[0]; }) // Use centroid for x position
+                .attr("y", function(d) { return path_projection.centroid(d)[1]; }) // Use centroid for y position
+                .attr("text-anchor", "middle") // Centers the text
+                .attr("alignment-baseline", "central")
+                .style("font-size", "12px") // Adjust font size as needed
+                .style("fill", "black"); // Set text color
 
         this.initDescr();
     }
