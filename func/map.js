@@ -173,11 +173,8 @@ class Map {
 
     
     redraw() {
-        this.#container.selectAll("*")
-                    .remove();
-
+        this.#container.selectAll("*").remove();
         this.drawMap();
-
     }
 
 

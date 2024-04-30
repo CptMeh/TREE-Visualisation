@@ -30,8 +30,13 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a id="banner-map" class="nav-link px-4" href="#map"></a>
+        <li class="nav-item dropdown">
+          <a id="banner-maps" class="nav-link dropdown-toggle px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="map_dropdown_1" class="dropdown-item" data-target="map_1"></a>
+            <a id="map_dropdown_2" class="dropdown-item" data-target="map_2"></a>
+            <a id="map_dropdown_3" class="dropdown-item" data-target="map_3"></a>
+          </div>
         </li>
 
         <li class="nav-item">
@@ -45,9 +50,9 @@
         <li class="nav-item dropdown">
           <a id="banner-lang" class="nav-link dropdown-toggle px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 0); window.location.reload();">Deutsch</a>
-            <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 1); window.location.reload();">English</a>
-            <a class="dropdown-item" href="" onclick="localStorage.setItem('lang', 2); window.location.reload();">Français</a>
+            <a class="dropdown-item" href="#" onclick="localStorage.setItem('lang', 0); window.location.reload();">Deutsch</a>
+            <a class="dropdown-item" href="#" onclick="localStorage.setItem('lang', 1); window.location.reload();">English</a>
+            <a class="dropdown-item" href="#" onclick="localStorage.setItem('lang', 2); window.location.reload();">Français</a>
           </div>
         </li>
       </ul>

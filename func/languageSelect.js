@@ -151,8 +151,37 @@ function HTMLbanner() {
     d3.select("#banner-title")
         .html(vocab.banner_title);
 
-    d3.select("#banner-map")
+    d3.select("#banner-maps")
         .html(vocab.map);
+
+    d3.select("#map_dropdown_1")
+        .on("click", function() {
+            // Get the target div id from the data-target attribute
+            var targetId = d3.select(this).attr("data-target");            
+            // Scroll to the target div
+            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        })
+        .html(vocab.wave + " 1");
+
+    d3.select("#map_dropdown_2")
+        .on("click", function() {
+            // Get the target div id from the data-target attribute
+            var targetId = d3.select(this).attr("data-target");            
+            // Scroll to the target div
+            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        })
+        .html(vocab.wave + " 2");
+
+    d3.select("#map_dropdown_3")
+        .on("click", function() {
+            // Get the target div id from the data-target attribute
+            var targetId = d3.select(this).attr("data-target");            
+            // Scroll to the target div
+            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        })
+        .html(vocab.wave + " 3");
+
+
 
     d3.select("#banner-descr")
         .html(vocab.descr[0][0]);
@@ -163,6 +192,8 @@ function HTMLbanner() {
     d3.select("#banner-lang")
         .html(vocab.lang);
 }
+
+
 
 function HTMLdescription() {
     const descr = vocab.descr;
