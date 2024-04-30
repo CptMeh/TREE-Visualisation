@@ -13,11 +13,10 @@ const backupdTreeURL = "https://raw.githubusercontent.com/CptMeh/TREE-Visualisat
 // Local URL for Tree2 data
 const treeDataURL = "./data/study-data/currated_data.csv"
 
+var maps = []
+
 //createAll(geoDataURL, treeDataURL)
-createAll(backupURL, backupdTreeURL)
-
-
-
+run(backupURL, backupdTreeURL)
 
 /**
  * Creates the Visualisation of the data at the given URLs.
@@ -25,7 +24,7 @@ createAll(backupURL, backupdTreeURL)
  * @param geoDataURL  String the URL to the Data source of the geo data
  * @param treeDataURL String the URL to the Data source of the study data
 **/
-function createAll(geoDataURL, treeDataURL) {
+function run(geoDataURL, treeDataURL) {
   // Get the map- and TREE-data and check if everything worked. Then use the drawMap function to render the map.
   d3.json(geoDataURL).then(function(geoData) {
     // GeoJSON data loaded successfully
@@ -56,22 +55,15 @@ function createAll(geoDataURL, treeDataURL) {
 function init(geoData, treeData) {
   prepareData(geoData, treeData);
 
-  if (localStorage.getItem("geoData") == null) {
-    localStorage.geoData = JSON.stringify(geoData);
-  }
-  console.log(geoData)
-  console.log(localStorage.geoData)
-
-  visualise();
 
 
-  // For some reason the maps don't resize on widow resizing. So, now they just get deleted an drecreated...
+  createMaps(geoData);
+
+
+  // For some reason the maps don't resize on widow resizing. So, now they just get deleted and recreated...
   window.addEventListener('resize', () => {
-    clearMaps();
-    visualise();
+    redraw();
   });
-
-  addTable(maps)
 
   // HTML text
   HTMLtitle();
@@ -80,43 +72,18 @@ function init(geoData, treeData) {
   HTMLfooter();
 }
 
-function visualise() {
-  let geoData = JSON.parse(localStorage.geoData);
-  let maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
+function redraw() {
+  for (const m of maps) {
+    m.redraw();
+  }
+}
 
+function createMaps(geoData) {
+  maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
 
   for (const m of maps) {
-    m.setUpContainers();
     m.drawMap();
-    addVarSelection(m);
   }
-
 }
 
-function clearMaps() {
-  d3.select("#maps")
-    .selectAll("*")
-    .remove();
 
-}
-
-function addVarSelection(map) {
-  const varSelect = map.getContainer()
-                          .append("select")
-                              .attr("id", "dropdown-button")
-                              .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
-                              .attr("label", "Select Variable")
-                              .on("change", function() {map.setSelected(this.value); map.drawMap();});
-
-  varSelect.selectAll("option")
-            .data(["BB", "AB", "ZL", "NIA"])
-            .enter()
-            .append("option")
-            .attr("value", d => d)
-            .text(d => vocab[d]);
-
-}
-
-function addTable(maps) {
-  //select their containers
-}

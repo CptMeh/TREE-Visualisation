@@ -29,18 +29,19 @@ class Map {
      */
     constructor(geoData, wave, vocab) {
         this.#wave = wave;
-        this.#width = window.innerWidth*0.8;
-        this.#height = this.#width*0.8;
         this.#geoData = geoData;
         this.#selected = "BB"; // Chose BB to be selected at the start
         this.#vocab = vocab;
+
+        this.#container = d3.select("#maps")
+                            .append("div")
+                            .attr("id", "container_" + this.#wave)
+                            .attr("class", "row container");
     }   
 
     setUpContainers() {
-        this.#container = d3.select("#maps")
-            .append("div")
-            .attr("id", "container_" + this.#wave)
-            .attr("class", "row container");
+        this.#width = window.innerWidth*0.8;
+        this.#height = this.#width*0.8;
 
         this.#map_div = this.#container
             .append("div")
@@ -48,7 +49,7 @@ class Map {
             .attr("class", "col order-1");
 
         let projection = d3.geoIdentity()
-            .reflectY(true)
+            .reflectY(true) // Needs to be flipped, because for some reason the map is upside down on its own...
             .fitSize([this.#width, this.#height], this.#geoData); // The projection determines what kind of plane the map itself is projected on to (eg. onto a globe or a flat plain).
 
         this.#path_projection = d3.geoPath()
@@ -65,6 +66,7 @@ class Map {
      * Renders the map, adds the hover and click functionalities to the individual parts of the map and colours in the individual parts of the map.
      **/  
     drawMap() {
+        this.setUpContainers();
 
         let tooltip = this.#map_div
                             .append("div")
@@ -170,6 +172,13 @@ class Map {
     }
 
     
+    redraw() {
+        this.#container.selectAll("*")
+                    .remove();
+
+        this.drawMap();
+
+    }
 
 
     /**  
@@ -262,6 +271,27 @@ class Map {
             "wave" : this.#wave, 
             "vocab" : vocab
         }
+    }
+
+    addVarSelection() {
+        const varSelect = this.#container
+                                .append("select")
+                                    .attr("id", "dropdown-button")
+                                    .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
+                                    .attr("label", "Select Variable")
+                                    .on("change", function() {setSelected(this.value); drawMap();});
+      
+        varSelect.selectAll("option")
+                  .data(["BB", "AB", "ZL", "NIA"])
+                  .enter()
+                  .append("option")
+                  .attr("value", d => d)
+                  .text(d => vocab[d]);
+      
+      }
+      
+    addTable() {
+        //select their containers
     }
 
     setWave(wave) {
