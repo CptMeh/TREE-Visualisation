@@ -154,33 +154,17 @@ function HTMLbanner() {
     d3.select("#banner-maps")
         .html(vocab.map);
 
-    d3.select("#map_dropdown_1")
-        .on("click", function() {
-            // Get the target div id from the data-target attribute
-            var targetId = d3.select(this).attr("data-target");            
-            // Scroll to the target div
-            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-        })
+        d3.select("#map_dropdown_1")
+        .on("click", scrollToTarget)
         .html(vocab.wave + " 1");
-
+    
     d3.select("#map_dropdown_2")
-        .on("click", function() {
-            // Get the target div id from the data-target attribute
-            var targetId = d3.select(this).attr("data-target");            
-            // Scroll to the target div
-            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-        })
+        .on("click", scrollToTarget)
         .html(vocab.wave + " 2");
-
+    
     d3.select("#map_dropdown_3")
-        .on("click", function() {
-            // Get the target div id from the data-target attribute
-            var targetId = d3.select(this).attr("data-target");            
-            // Scroll to the target div
-            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
-        })
+        .on("click", scrollToTarget)
         .html(vocab.wave + " 3");
-
 
 
     d3.select("#banner-descr")
@@ -193,7 +177,12 @@ function HTMLbanner() {
         .html(vocab.lang);
 }
 
-
+function scrollToTarget() {
+    // Get the target div id from the data-target attribute
+    var targetId = d3.select(this).attr("data-target");            
+    // Scroll to the target div
+    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+}
 
 function HTMLdescription() {
     const descr = vocab.descr;
