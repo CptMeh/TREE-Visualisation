@@ -221,12 +221,6 @@ class Map {
      */
     addDropDown(map) {
         if (d3.select("#dropdown-button_" + this.#wave).size() === 0) {
-            // Create a label element
-            this.#container
-                .append("label")
-                    .attr("for", "dropdown-button_" + this.#wave)
-                    .text("Select Variable");
-
             // Create the dropdown select element
             const varSelect = this.#container
                 .append("select")
@@ -246,6 +240,8 @@ class Map {
                 .append("option")
                 .attr("value", d => d)
                 .text(d => vocab[d]);
+        } else {
+            d3.select("#dropdown-button_" + this.#wave).style("width", this.#width + "px");
         }
     }
     
