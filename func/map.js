@@ -16,7 +16,7 @@ class Map {
     #vocab;
     #container; // Contains the map_div, the wave select, and the data table
     #map_div; // Only contains the svg for the map and the tooltips
-    #SVG;
+    #svg;
     #tooltip;
     
 
@@ -65,7 +65,7 @@ class Map {
             .attr("id", "map_" + this.#wave)
             .attr("class", "col order-1");
 
-        this.#SVG = this.#map_div
+        this.#svg = this.#map_div
                         .append("svg")
                         .classed("col", true)
                         .attr("width", this.#width)
@@ -129,7 +129,7 @@ class Map {
         };
     
         // Set up event listeners
-        this.#SVG.selectAll("path")
+        this.#svg.selectAll("path")
             .on("mousemove", mousemove)
             .on("click", mouseclick)
             .on("mouseleave", mouseleave);
@@ -164,7 +164,7 @@ class Map {
         const path_projection = d3.geoPath().projection(projection);
     
         // Create crosshatch pattern
-        this.#SVG.append("defs")
+        this.#svg.append("defs")
             .append("pattern")
             .attr("id", "crosshatch")
             .attr("patternUnits", "userSpaceOnUse")
@@ -178,7 +178,7 @@ class Map {
             .attr("height", 8);
     
         // Render map
-        this.#SVG.selectAll("path")
+        this.#svg.selectAll("path")
             .data(features)
             .enter()
             .append("path")
@@ -201,7 +201,7 @@ class Map {
     renderCantonText(path_projection) {
     
         // Render Canton text
-        this.#SVG.selectAll("text")
+        this.#svg.selectAll("text")
             .data(this.#geoData.features)
             .enter()
             .append("text")
@@ -284,7 +284,7 @@ class Map {
      * Clears the container and redraws the map.
      */
     redraw() {
-        this.#SVG.remove();
+        this.#svg.remove();
         this.#map_div.remove();
 
         this.drawMap();
@@ -297,10 +297,9 @@ class Map {
      * @param this_map  Object this instance of the map class
     */
     permaDescr(event, this_map) {
-        let descr = d3.select("#canton-descr");
-
-        descr.selectAll("p")
-            .remove();
+        const descr = this.#map_div.append("div")
+                                    .selectAll("p")
+                                    .remove();
 
         descr.html(this_map.description(event, false));
     }
@@ -405,6 +404,6 @@ class Map {
     }
 
     getSVG() {
-        return this.#SVG;
+        return this.#svg;
     }
 }
