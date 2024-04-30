@@ -46,8 +46,8 @@ class Map {
     drawMap() {
         this.setUpContainers();
         this.setupTooltip();
-        this.setupEventListeners();
         this.renderMap();
+        this.setupEventListeners();
         this.initDescr();
     }
 
@@ -80,7 +80,7 @@ class Map {
     setupTooltip() {
         // Create tooltip
         this.#tooltip = this.#map_div.append("div")
-            .attr("id", "tooltip")
+            .attr("id", "tooltip_" + this.#wave)
             .style("opacity", 0)
             .attr("class", "tooltip")
             .style("background-color", "white")
