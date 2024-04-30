@@ -42,9 +42,9 @@ class Map {
 
 
     /**
-     * Renders the map, sets up the different HTML containers adds the hover and click functionalities to the individual parts of the map 
-     * and colours in the individual parts of the map.
-     **/  
+     * Renders the map, sets up the different HTML containers, adds hover and click functionalities to the individual parts of the map, and colors in the individual parts of the map.
+     * Also initializes the description.
+     */
     drawMap() {
         this.setUpContainers();
         this.setupTooltip();
@@ -53,10 +53,14 @@ class Map {
         this.initDescr();
     }
 
-
+    /**
+     * Sets up the containers for the map and SVG.
+     */
     setUpContainers() {
         this.#width = window.innerWidth*0.3;
         this.#height = this.#width*0.8;
+
+        this.addVarSelection();
 
         this.#map_div = this.#container
             .append("div")
@@ -70,6 +74,9 @@ class Map {
                         .attr("height", this.#height);
     }
     
+    /**
+     * Sets up the tooltip for displaying additional information on hover.
+     */
     setupTooltip() {
         // Create tooltip
         this.#tooltip = this.#map_div.append("div")
@@ -86,6 +93,10 @@ class Map {
             .style("pointer-events", "none");
     }
     
+
+    /**
+     * Sets up event listeners for mouse events on map elements.
+     */
     setupEventListeners() {
         let this_map_instance = this; // To avoid confusion for the event listeners, since "this" sometimes has a different context when using d3.js
     
@@ -125,6 +136,10 @@ class Map {
             .on("mouseleave", mouseleave);
     }
     
+
+    /**
+     * Renders the map with colored paths based on provided data.
+     */
     renderMap() {
         let features = this.#geoData.features;
         let maxScale = 0;
@@ -181,6 +196,11 @@ class Map {
         this.renderCantonText(path_projection)
     }
     
+
+    /**
+     * Renders the text for cantons on the map.
+     * @param {Object} path_projection - The path projection function.
+     */
     renderCantonText(path_projection) {
     
         // Render Canton text
@@ -197,7 +217,32 @@ class Map {
             .style("fill", "black"); // Set text color
     }
 
+    addVarSelection() {
+        const map = this; // janky, but works for now :/
+        const varSelect = this.#container
+                                .append("select")
+                                    .attr("id", "dropdown-button")
+                                    .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
+                                    .attr("label", "Select Variable")
+                                    .on("change", function() {map.setSelected(this.value); map.redraw();});
+
+        varSelect.selectAll("option")
+                    .data(["BB", "AB", "ZL", "NIA"])
+                    .enter()
+                    .append("option")
+                    .attr("value", d => d)
+                    .text(d => vocab[d]);
+    }
     
+      
+
+    addTable() {
+        //select their containers
+    }
+
+    /**
+     * Clears the container and redraws the map.
+     */
     redraw() {
         this.#container.selectAll("*").remove();
         this.drawMap();
@@ -288,34 +333,7 @@ class Map {
         d3.select("#canton-descr").html(label);
     }
 
-    toJSONFormat() {
-        return {
-            "geoData" : this.#geoData, 
-            "wave" : this.#wave, 
-            "vocab" : vocab
-        }
-    }
 
-    addVarSelection() {
-        const varSelect = this.#container
-                                .append("select")
-                                    .attr("id", "dropdown-button")
-                                    .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
-                                    .attr("label", "Select Variable")
-                                    .on("change", function() {setSelected(this.value); drawMap();});
-      
-        varSelect.selectAll("option")
-                  .data(["BB", "AB", "ZL", "NIA"])
-                  .enter()
-                  .append("option")
-                  .attr("value", d => d)
-                  .text(d => vocab[d]);
-      
-      }
-      
-    addTable() {
-        //select their containers
-    }
 
     setWave(wave) {
         this.#wave = wave;
