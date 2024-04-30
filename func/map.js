@@ -214,8 +214,12 @@ class Map {
             .style("fill", "black"); // Set text color
     }
 
+    /**
+     * Adds a dropdown select element to the specified map.
+     * 
+     * @param {Object} map - The map object to which the dropdown select element will be added.
+     */
     addDropDown(map) {
-        
         if (d3.select("#dropdown-button_" + this.#wave).size() === 0) {
             // Create a label element
             this.#container
