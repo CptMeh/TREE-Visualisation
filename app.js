@@ -32,7 +32,7 @@ function run(geoDataURL, treeDataURL) {
       // CSV data loaded successfully
       init(geoData, treeData);
     }).catch(function(error) {
-      console.error("Something went wrong loading the tree data: " + error);
+      console.error("Something went wrong loading the data: " + error);
     });
   });
 }
@@ -54,11 +54,7 @@ function run(geoDataURL, treeDataURL) {
 **/
 function init(geoData, treeData) {
   prepareData(geoData, treeData);
-
-
-
   createMaps(geoData);
-
 
   // For some reason the maps don't resize on widow resizing. So, now they just get deleted and recreated...
   window.addEventListener('resize', () => {

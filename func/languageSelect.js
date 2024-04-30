@@ -166,7 +166,6 @@ function HTMLbanner() {
         .on("click", scrollToTarget)
         .html(vocab.wave + " 3");
 
-
     d3.select("#banner-descr")
         .html(vocab.descr[0][0]);
 

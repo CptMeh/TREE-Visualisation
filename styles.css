@@ -3,34 +3,45 @@
   float:right;
 }
 
+
+/* Style for the footer */
 #end-card {
-  background-color: #555;
-  width: 101.7%;
-  height: 102%;
-  font-size: 2vw;
+  background-color: lightgray; /* Light gray background */
 }
 
+/* Style for each column */
+#dev,
+#git,
+#tree {
+  padding: 20px; /* Adjust padding as needed */
+}
+
+/* Style for headings within each column */
 #dev {
-  text-align: left;
-  color: lightgray;
-  font-size: 2vw;
+  text-align: left; 
+
+}
+#git {
+  text-align: center; 
 }
 
 #tree {
-  text-align: right;
-  color: lightgray;
-  font-size: 2vw;
+  text-align: right; /* Align all text content within the #tree element to the right */
 }
 
-#git {
-  text-align: center;
-  color: lightgray;
-  font-size: 2vw;
+
+/* Style for links within the git column */
+#git a {
+  display: block; /* Make the link a block element */
+  text-align: center; /* Center-align the link */
+  color: inherit; /* Inherit text color from parent */
+  text-decoration: none; /* Remove underline */
 }
 
-h5 {
-  font-size: 2vw; 
+#git a:hover {
+  text-decoration: underline; /* Add underline on hover */
 }
+
 
 .full-size {
   height: 100%;

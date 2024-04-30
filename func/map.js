@@ -40,7 +40,7 @@ class Map {
     }   
 
     setUpContainers() {
-        this.#width = window.innerWidth*0.8;
+        this.#width = window.innerWidth*0.3;
         this.#height = this.#width*0.8;
 
         this.#map_div = this.#container
@@ -63,7 +63,8 @@ class Map {
     }
 
     /**
-     * Renders the map, adds the hover and click functionalities to the individual parts of the map and colours in the individual parts of the map.
+     * Renders the map, sets up the different HTML containers adds the hover and click functionalities to the individual parts of the map 
+     * and colours in the individual parts of the map.
      **/  
     drawMap() {
         this.setUpContainers();
