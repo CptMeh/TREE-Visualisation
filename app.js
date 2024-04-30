@@ -54,7 +54,11 @@ function run(geoDataURL, treeDataURL) {
 **/
 function init(geoData, treeData) {
   prepareData(geoData, treeData);
-  createMaps(geoData);
+  maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
+
+  for (const m of maps) {
+    m.drawMap();
+  }
 
   // For some reason the maps don't resize on widow resizing. So, now they just get deleted and recreated...
   window.addEventListener('resize', () => {
@@ -71,14 +75,6 @@ function init(geoData, treeData) {
 function redraw() {
   for (const m of maps) {
     m.redraw();
-  }
-}
-
-function createMaps(geoData) {
-  maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
-
-  for (const m of maps) {
-    m.drawMap();
   }
 }
 

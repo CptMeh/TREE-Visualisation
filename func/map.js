@@ -39,8 +39,6 @@ class Map {
                             .attr("class", "row container");
     }   
 
-
-
     /**
      * Renders the map, sets up the different HTML containers, adds hover and click functionalities to the individual parts of the map, and colors in the individual parts of the map.
      * Also initializes the description.
@@ -60,7 +58,7 @@ class Map {
         this.#width = window.innerWidth*0.3;
         this.#height = this.#width*0.8;
 
-        this.addVarSelection();
+        this.addDropDown(this);
 
         this.#map_div = this.#container
             .append("div")
@@ -72,6 +70,8 @@ class Map {
                         .classed("col", true)
                         .attr("width", this.#width)
                         .attr("height", this.#height);
+
+        //this.addTable();
     }
     
     /**
@@ -93,7 +93,6 @@ class Map {
             .style("pointer-events", "none");
     }
     
-
     /**
      * Sets up event listeners for mouse events on map elements.
      */
@@ -136,7 +135,6 @@ class Map {
             .on("mouseleave", mouseleave);
     }
     
-
     /**
      * Renders the map with colored paths based on provided data.
      */
@@ -196,7 +194,6 @@ class Map {
         this.renderCantonText(path_projection)
     }
     
-
     /**
      * Renders the text for cantons on the map.
      * @param {Object} path_projection - The path projection function.
@@ -217,37 +214,81 @@ class Map {
             .style("fill", "black"); // Set text color
     }
 
-    addVarSelection() {
-        const map = this; // janky, but works for now :/
-        const varSelect = this.#container
-                                .append("select")
-                                    .attr("id", "dropdown-button")
-                                    .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
-                                    .attr("label", "Select Variable")
-                                    .on("change", function() {map.setSelected(this.value); map.redraw();});
+    addDropDown(map) {
+        
+        if (d3.select("#dropdown-button_" + this.#wave).size() === 0) {
+            // Create a label element
+            this.#container
+                .append("label")
+                    .attr("for", "dropdown-button_" + this.#wave)
+                    .text("Select Variable");
 
-        varSelect.selectAll("option")
-                    .data(["BB", "AB", "ZL", "NIA"])
-                    .enter()
-                    .append("option")
-                    .attr("value", d => d)
-                    .text(d => vocab[d]);
+            // Create the dropdown select element
+            const varSelect = this.#container
+                .append("select")
+                    .attr("id", "dropdown-button_" + this.#wave)
+                    .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
+                    .style("position", "absolute")
+                    .style("width", this.#width + "px")
+                    .on("change", function() {
+                        map.setSelected(this.value);
+                        map.redraw();
+                    });
+
+            // Populate the dropdown with options
+            varSelect.selectAll("option")
+                .data(["BB", "AB", "ZL", "NIA"])
+                .enter()
+                .append("option")
+                .attr("value", d => d)
+                .text(d => vocab[d]);
+        }
     }
     
-      
-
     addTable() {
-        //select their containers
+        let table =this.#container.append("table");
+        
+        // Add a class to the table for styling (optional)
+        table.attr("class", "data-table");
+
+        // Create the header row
+        const header = table.append("thead").append("tr");
+
+        // Define the columns for the header, including the country column
+        const columns = ["country", "BB", "AB", "ZL", "NIA"];
+
+        // Append the header cells
+        header.selectAll("th")
+            .data(columns)
+            .enter()
+            .append("th")
+            .text(column => column);
+
+        // Create rows for each data entry
+        const rows = table.append("tbody")
+            .selectAll("tr")
+            .data(data)
+            .enter()
+            .append("tr");
+
+        // Create cells for each row
+        rows.selectAll("td")
+            .data(row => columns.map(column => ({ value: row[column], column })))
+            .enter()
+            .append("td")
+            .text(d => d.value);
+
     }
 
     /**
      * Clears the container and redraws the map.
      */
     redraw() {
-        this.#container.selectAll("*").remove();
+        this.#SVG.remove();
+        this.#map_div.remove();
+
         this.drawMap();
     }
-
 
     /**  
      * Creates the permanent description of the values, shown in the tool tip.
@@ -303,7 +344,6 @@ class Map {
         return label;    
     }
 
-
     /**
      * Initialises the label based on if it is for a tool tip or not:
      * - if isTooltip == True: the label is initialised with the wave number
@@ -319,7 +359,6 @@ class Map {
                             "<p><b>" + this.#vocab["selected"] + " " + this.#vocab["survey wave"] + ": " + this.#wave + "</b></p>";
     }
 
-
     /**
      * Writes the initial label combined with the infomation about the canton and its variables directly into HTML, using d3.js.
      */
@@ -332,8 +371,6 @@ class Map {
 
         d3.select("#canton-descr").html(label);
     }
-
-
 
     setWave(wave) {
         this.#wave = wave;
@@ -353,6 +390,10 @@ class Map {
 
     setSelected(selected) {
         this.#selected = selected;
+    }
+
+    getSelected() {
+        return this.#selected;
     }
 
     getContainer() {
