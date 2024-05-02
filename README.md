@@ -1,7 +1,7 @@
 # TREE-Visualisation
 A visualisation applet in form of an interactive map of switzerland for the TREE study. 
 
-# Beginners Guide fpr running the applet on your PC
+# Beginners Guide for running the applet on your PC
 This is a guide on how to open and look at the Visualisation for people who are unfamilliar with GitHub and programming.
 
 ### Step 1: Download the files
