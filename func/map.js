@@ -30,7 +30,7 @@ class Map {
     constructor(geoData, wave, vocab) {
         this.#wave = wave;
         this.#geoData = geoData;
-        this.#selected = "BB"; // Chose BB to be selected at the start
+        this.#selected = "GE"; // Chose BB to be selected at the start
         this.#vocab = vocab;
 
         this.#container = d3.select("#maps")
@@ -72,7 +72,6 @@ class Map {
                         .attr("height", this.#height);
 
         //this.addTable();
-        console.log(this.#geoData)
     }
     
     /**

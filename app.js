@@ -11,23 +11,22 @@ const geoDataURL = "./data/geo-data/landesforstinventar-kantone_2056.geojson"
 const backupdTreeURL = "https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/study-data/currated_data.csv"
 
 // Local URL for Tree2 data
-const treeDataURL = "./data/study-data/currated_data.csv"
+const treeDataURL = "./data/study-data/currated_data.csv";
 
-var maps = []
+var maps = [];
 
 
-fetch('./data/geo-data/map_data.geojson')
+fetch('https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/dev/data/geo-data/map_data.geojson')
   .then(response => response.json())
   .then(geoData => {
     // `data` now contains the parsed GeoJSON object
-    init(geoData)
+    console.log(geoData);
+    init(geoData);
+
   })
   .catch(error => {
     console.error('Error reading GeoJSON file:', error);
-  });
-
-
-
+});
 
 
 /**
@@ -43,7 +42,6 @@ fetch('./data/geo-data/map_data.geojson')
  * @link languageSelect#HTMLfooter
  * 
  * @param {Array??} geoData  geojson data
- * @param {Array??} treeData variables and values of Tree2-Study
 **/
 function init(geoData) {
   maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
