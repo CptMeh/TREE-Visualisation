@@ -15,27 +15,20 @@ const treeDataURL = "./data/study-data/currated_data.csv"
 
 var maps = []
 
-//createAll(geoDataURL, treeDataURL)
-run(backupURL, backupdTreeURL)
 
-/**
- * Creates the Visualisation of the data at the given URLs.
- * 
- * @param geoDataURL  String the URL to the Data source of the geo data
- * @param treeDataURL String the URL to the Data source of the study data
-**/
-function run(geoDataURL, treeDataURL) {
-  // Get the map- and TREE-data and check if everything worked. Then use the drawMap function to render the map.
-  d3.json(geoDataURL).then(function(geoData) {
-    // GeoJSON data loaded successfully
-    d3.csv(treeDataURL).then(function(treeData) {
-      // CSV data loaded successfully
-      init(geoData, treeData);
-    }).catch(function(error) {
-      console.error("Something went wrong loading the data: " + error);
-    });
+fetch('./data/geo-data/map_data.geojson')
+  .then(response => response.json())
+  .then(geoData => {
+    // `data` now contains the parsed GeoJSON object
+    init(geoData)
+  })
+  .catch(error => {
+    console.error('Error reading GeoJSON file:', error);
   });
-}
+
+
+
+
 
 /**
  * Initialises all important parts of this Visualisation:
@@ -49,11 +42,10 @@ function run(geoDataURL, treeDataURL) {
  * @link languageSelect#HTMLdescrition
  * @link languageSelect#HTMLfooter
  * 
- * @param geoData  Array?? geojson data
- * @param treeData Array?? variables and values of Tree2-Study
+ * @param {Array??} geoData  geojson data
+ * @param {Array??} treeData variables and values of Tree2-Study
 **/
-function init(geoData, treeData) {
-  prepareData(geoData, treeData);
+function init(geoData) {
   maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
 
   for (const m of maps) {
@@ -77,5 +69,3 @@ function redraw() {
     m.redraw();
   }
 }
-
-

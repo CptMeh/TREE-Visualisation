@@ -23,7 +23,7 @@ class Map {
     /**
      * Construction and initialisation of the map class and all its variables.
      * 
-     * @param {Array} geoData   the geo data of the map to be visualised
+     * @param {Array?+} geoData   the geo data of the map to be visualised
      * @param {int} wave        the selected questionair wave of the Tree2 Studie
      * @param {dict} vocab      the vocabulary of all the text in the chosen language 
      */
@@ -55,7 +55,7 @@ class Map {
      * Sets up the containers for the map and SVG.
      */
     setUpContainers() {
-        this.#width = window.innerWidth*0.3;
+        this.#width = window.innerWidth*0.4;
         this.#height = this.#width*0.8;
 
         this.addDropDown(this);
@@ -72,6 +72,7 @@ class Map {
                         .attr("height", this.#height);
 
         //this.addTable();
+        console.log(this.#geoData)
     }
     
     /**
@@ -255,7 +256,7 @@ class Map {
         const header = table.append("thead").append("tr");
 
         // Define the columns for the header, including the country column
-        const columns = ["country", "BB", "AB", "ZL", "NIA"];
+        const columns = ["lang", "BB", "AB", "ZL", "NIA"];
 
         // Append the header cells
         header.selectAll("th")
@@ -297,10 +298,8 @@ class Map {
      * @param this_map  Object this instance of the map class
     */
     permaDescr(event, this_map) {
-        const descr = this.#map_div.append("div")
-                                    .selectAll("p")
-                                    .remove();
-
+        const descr = this_map.getMapDiv()
+                                .append("div");
         descr.html(this_map.description(event, false));
     }
 
