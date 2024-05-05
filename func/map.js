@@ -74,7 +74,7 @@ class Map {
             }
         
         } else {
-            this.#width = window.innerHeight*0.4;
+            this.#width = window.innerHeight*0.3;
             this.#height = this.#width*0.8;
         }
 
@@ -89,9 +89,15 @@ class Map {
 
         this.#svg = this.#map_div
                         .append("svg")
-                        .classed("col-8 order-1", true)
                         .attr("width", this.#width)
                         .attr("height", this.#height);
+
+
+        if (!this.isMobile()) {
+            this.#svg.attr('class', 'col-8 order-1')    
+        } else {
+            this.#svg.style("margin-top", "50px");
+        }
 
         this.createTable(this.#summary[this.#wave], this.#summary['lang']);
     }
@@ -261,34 +267,47 @@ class Map {
     
     createTable(entries, languages) {
         const container_div = this.#map_div.append('div')
-                                .attr('id', 'container_' + this.#wave)
-                                .attr('class', 'col order-2'); // Align items to the end (right)
-    
-        const table_div = container_div.append('div')
-                                .attr('id', 'table_' + this.#wave + '_div')
-                                .attr('width', 8)
-                                .attr('height', 8);
+            .attr('id', 'container_' + this.#wave)
+            .style("width", this.#width + "px");
     
         if (!this.isMobile()) {
-            table_div.style('margin-right', '0');
+            container_div.attr('class', 'col order-2')
         }
+
+        const table_div = container_div.append('div')
+            .attr('id', 'table_' + this.#wave + '_div')
+    
     
         const table = table_div.append('table')
-                                .attr('id', 'table_' + this.#wave)
-                                .attr('class', 'table table-striped table-bordered');
+            .attr('id', 'table_' + this.#wave)
+            .attr('class', 'table table-striped table-bordered');
     
         const thead = table.append('thead');
         const tbody = table.append('tbody');
     
         thead.html('<p>' + vocab['table_descr'] + '</p>'); //TODO: vocab
     
-        // Bind and append rows for the data
+        // Header between entryRows and languageRows
+        tbody.append('tr').append('th')
+            .attr('colspan', 2)
+            .text(vocab['table_head']);
+    
+        // Bind and append rows for the entry data
         const entryRows = tbody.selectAll('tr.entry')
             .data(Object.entries(entries))
             .enter()
             .append('tr')
             .classed('entry', true);
     
+        entryRows.append('td')
+            .text(d => vocab[d[0]]); //TODO: vocab
+    
+        entryRows.append('td')
+            .text(d => d[1] + '%');
+    
+        tbody.append('tr').append('th')
+            .attr('colspan', 2)
+            .text(vocab['lang']);
         // Bind and append rows for the language data
         const languageRows = tbody.selectAll('tr.language')
             .data(Object.entries(languages))
@@ -296,18 +315,13 @@ class Map {
             .append('tr')
             .classed('language', true);
     
-        entryRows.append('td')
-            .text(d => vocab[d[0]]); //TODO: vocab
-    
-        entryRows.append('td')
-            .text(d => d[1]);
-    
-        languageRows.append('td') 
+        languageRows.append('td')
             .text(d => vocab[d[0]]); //TODO: vocab
     
         languageRows.append('td')
-            .text(d => d[1]);
+            .text(d => d[1] + '%');
     }
+    
     
     
 
