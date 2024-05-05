@@ -69,7 +69,7 @@ class Map {
                 this.#width = window.innerWidth*0.7;
                 this.#height = this.#width*0.8;
             } else {
-                this.#width = window.innerWidth*0.5;
+                this.#width = window.innerWidth*0.3;
                 this.#height = this.#width*0.8;
             }
         
@@ -78,18 +78,18 @@ class Map {
             this.#height = this.#width*0.8;
         }
 
-
+        
         this.#map_div = this.#container
             .append("div")
             .attr("id", "map_" + this.#wave)
-            .attr("class", "col order-1");
+            .attr("class", "row");
 
         this.addDropDown(this);
 
 
         this.#svg = this.#map_div
                         .append("svg")
-                        .classed("col order-1", true)
+                        .classed("col-8 order-1", true)
                         .attr("width", this.#width)
                         .attr("height", this.#height);
 
@@ -122,17 +122,7 @@ class Map {
     setupEventListeners() {
         let this_map_instance = this; // To avoid confusion for the event listeners, since "this" sometimes has a different context when using d3.js
     
-        // Define event listener functions
-        let mouseclick = function(d) {
-            this_map_instance.permaDescr(d, this_map_instance);
-        };
-    
         let mousemove = function(d) {
-            // Highlight selected part and show tooltip
-            d3.select(this)
-                .style("stroke-width", 2)
-                .style("cursor", "pointer");
-    
             this_map_instance.#tooltip
                 .html(this_map_instance.description(d, true))
                 .style("left", (d.pageX) + "px")
@@ -154,7 +144,6 @@ class Map {
         // Set up event listeners
         this.#svg.selectAll("path")
             .on("mousemove", mousemove)
-            .on("click", mouseclick)
             .on("mouseleave", mouseleave);
     }
     
@@ -271,48 +260,56 @@ class Map {
     }
     
     createTable(entries, languages) {
-        const table_div = this.#map_div.append('div')
+        const container_div = this.#map_div.append('div')
+                                .attr('id', 'container_' + this.#wave)
+                                .attr('class', 'col order-2'); // Align items to the end (right)
+    
+        const table_div = container_div.append('div')
                                 .attr('id', 'table_' + this.#wave + '_div')
-                                .attr('classed', 'col order-1')
-                                .attr("width", 8)
-                                .attr("height", 8);
+                                .attr('width', 8)
+                                .attr('height', 8);
+    
+        if (!this.isMobile()) {
+            table_div.style('margin-right', '0');
+        }
+    
         const table = table_div.append('table')
                                 .attr('id', 'table_' + this.#wave)
                                 .attr('class', 'table table-striped table-bordered');
+    
         const thead = table.append('thead');
         const tbody = table.append('tbody');
-
+    
         thead.html('<p>' + vocab['table_descr'] + '</p>'); //TODO: vocab
-       
-        // Bind and append rows for the initial set of data
+    
+        // Bind and append rows for the data
         const entryRows = tbody.selectAll('tr.entry')
             .data(Object.entries(entries))
             .enter()
             .append('tr')
-            .classed('entry', true); // Use a class to differentiate
-
+            .classed('entry', true);
+    
         // Bind and append rows for the language data
         const languageRows = tbody.selectAll('tr.language')
             .data(Object.entries(languages))
             .enter()
             .append('tr')
-            .classed('language', true); // Use a class to differentiate
-
-
+            .classed('language', true);
+    
         entryRows.append('td')
             .text(d => vocab[d[0]]); //TODO: vocab
-
+    
         entryRows.append('td')
             .text(d => d[1]);
-
+    
         languageRows.append('td') 
             .text(d => vocab[d[0]]); //TODO: vocab
-
+    
         languageRows.append('td')
             .text(d => d[1]);
-
-
     }
+    
+    
 
     /**
      * Clears the container and redraws the map.

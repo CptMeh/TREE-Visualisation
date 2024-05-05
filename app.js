@@ -1,17 +1,15 @@
-// Initialise the selected language (See languageSelect.js)
-const vocab = languageSelect();
-
-
-/*
+/***************************************************
 TODO: Change from dev branch back to main!!!!!!!!!!!
-*/
+****************************************************/
 
 // Online URL for the geo data for map of Switzerland with the TREE2-Data
 const geoDataURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/dev/data/geo-data/map_data.geojson'
-
 const summaryURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/dev/data/study-data/summary.json'
 
 var maps = []
+// Initialise the selected language (See languageSelect.js)
+const vocab = languageSelect();
+
 
 //run(geoDataURL, treeDataURL)
 run(geoDataURL)
@@ -33,9 +31,9 @@ function run(geoDataURL) {
 
         init(geoData, summary);
 
-    }).catch(function(error) {
-        console.error("Something went wrong loading the data: " + error);
-    });
+        }).catch(function(error) {
+            console.error("Something went wrong loading the data: " + error);
+        });
     });
 }
 
