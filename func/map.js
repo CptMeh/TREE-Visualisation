@@ -88,9 +88,7 @@ class Map {
                 
         }
         
-
         this.addDropDown(this);
-
 
         this.#svg = this.#map_div
                         .append("svg")
@@ -278,7 +276,17 @@ class Map {
         }
     }
 
-    
+    /**
+     * Creates and populates a table with data entries and language information.
+     * The table is created within a dynamically appended div element if it does not already exist.
+     * The table and its contents are styled and structured according to the provided data.
+     *
+     * @param {Object} entries - Object containing data entries to populate the table. 
+     *                           Each entry is a key-value pair where the key is the entry identifier
+     *                           and the value is the corresponding data.
+     * @param {Object} languages - Object containing language data to populate the table.
+     *                             Similar to entries, each language is a key-value pair.
+     */
     createTable(entries, languages) {
         if (d3.select('#table_div_' + this.#wave).size() === 0) {
             this.#map_div.append('div')
@@ -317,6 +325,15 @@ class Map {
         this.addRows(languages, tbody, 'tr.language');
     }
 
+    /**
+     * Adds rows to the provided table body (tbody) based on the entries and specified type.
+     * Each entry or language data point generates a new row in the table, with special formatting
+     * for selected entries.
+     *
+     * @param {Object} entries - Entries to be added to the table. Each entry is a key-value pair.
+     * @param {d3.Selection} tbody - The D3 selection of the tbody element where rows will be appended.
+     * @param {string} type - The CSS class to apply to each row for styling purposes.
+     */
     addRows(entries, tbody, type) {
         
         // Bind and append rows for the entry data
