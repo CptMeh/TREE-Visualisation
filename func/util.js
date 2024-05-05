@@ -74,11 +74,10 @@ const germanVocab = {
 
 // English Vocabulary
 const englishVocab = {
-    GR : "German",
-    FR : "French",
-    IT : "Italian",
-    EN : "English",
-    word: "english",
+    GR: "German",
+    FR: "French",
+    IT: "Italian",
+    EN: "English",
     Kanton: "Canton",
     coloring: "Coloring",
     selected: "selected",
@@ -97,33 +96,34 @@ const englishVocab = {
     lang : "Language",
     map_title : "Visualisation of the TREE2-Study - cantonal",
     cnt : "Continued",
-    descr : [["Description"], 
-            ["Visualization of the TREE2 Study",
-            "The results of the first three survey waves of the TREE2 cohort are visualized on the map above. Here, the results are listed by canton in percentage and color-coded."], 
-            ["Explanation of the variables",
-            "<p>In this visualization, the variables concerning education (t1educ_class_1_r, t2educ_class_1_r, t3educ_class_1_r) were categorized into vocational training (BB), general education (AB), intermediate solution (ZL), and not in education (NIA), weighted, and then presented as percentages.</p>"
-            + "<p>Grouping of the Variables:</p> <ul>"
-            + "<li><b>BB</b>: 2 years VET, 3-4 years VET, Vocational baccalaureate, General baccalaureate</li>"
-            + "<li><b>AB</b>: 10th school year</li>" 
-            + "<li><b>ZL</b>: Internship, Other intermediate solution, Other general education programme (specialized middle school, Waldorf)</li>"
-            + "<li><b>NIA</b>: NET</li>"
-            + "</ul>"],
-            ["TREE Study", 
-            "TREE (Transitions from initial education to working life) is a nationwide, longitudinal survey in Switzerland on the transition of young people from school to adult life (Transition). The focus of the study is on the educational and employment trajectories after leaving compulsory schooling. The first sample (TREE1) comprises over 6,000 young people who participated in the PISA (Programme for International Student Assessment) project in 2000 and were released from compulsory schooling in the same year. The sample is nationally and linguistically regionally representative. A second sample (TREE2) of almost 10,000 young people has been surveyed longitudinally since 2016. This makes TREE one of the few multi-cohort studies worldwide that allow cohort-comparative analyses."],
-    
-            ["About",
-            "This visualization was developed by Marlene Kulowatz and Ramon Näf as a project for the \"Open Data and Open Government\" lecture at the University of Bern in the Spring Semester 2023. The data for the TREE study was provided by <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a>."],
-            []
+    descr : [
+        ["Description"], 
+        ["Visualization of the TREE2-Study",
+        "Welcome to the geographical representation of the TREE2-Study! The three interactive maps present the three survey waves of the TREE2 cohort in an illustrative way, allowing users to choose between different education categories such as \"General education\", \"Vocational education & training\", \"Intermediate solution\", and \"Not in education or training\" via a dropdown menu above the map. On the right side of the maps, there is a table displaying the total percentage shares of the education categories nationwide for the specific survey wave. When selecting a canton, the tooltip will display the percentage share of the education categories for the respective canton. Additionally, the selected education category is highlighted in red both in the table and in the tooltip to emphasize it."],
+        
+        ["Explanation of the variables",
+        "<ul><li><strong>Vocational education & training:</strong> This variable captures participants who are enrolled in a vocational training program. This includes individuals who obtain a Federal Vocational Certificate (EBA), a Federal Certificate of Competence (EFZ), or a Vocational Baccalaureate.</li>\
+         <li><strong>General education:</strong> This variable captures participants who are enrolled in a general education program. This includes individuals attending high school, as well as other general education pathways.</li>\
+         <li><strong>Intermediate solution:</strong> This variable captures participants who are in a transitional solution before starting a vocational or general education program. This may include completing the 10th year of school, an internship, or other intermediate solutions.</li>\
+         <li><strong>Not in education or training:</strong> This variable captures participants who are not enrolled in a formal education program at the time of data collection.</li></ul>"
         ],
-    footer : ["TREE-Study", "University of Bern", "Institut of Soziology"]
-    };
+
+        ["TREE-Study", 
+        "TREE (Transitions from Education to Employment) is a comprehensive, nationwide longitudinal study that examines the transition of adolescents from school to adulthood. This study focuses on the educational and career pathways after leaving compulsory schooling. The first sample (TREE1) consists of more than 6,000 adolescents who participated in the Programme for International Student Assessment (PISA) project in 2000 and completed compulsory schooling in the same year. This sample is nationally and linguistically representative. Since 2016, a second sample (TREE2) of almost 10,000 adolescents has been longitudinally surveyed. Thus, TREE is one of the few multi-cohort studies worldwide that enable cohort-comparative analyses."],
+
+        ["Additional Information",
+        "This visualization was designed as a project for the course \"Open Data and Open Government\" at the University of Bern in the spring semester of 2023, in collaboration with Marlene Kulowatz and Ramon Näf. The data for the TREE-Study were provided by <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a>."]
+        ],
+    footer : ["TREE-Study", "University of Bern", "Institute of Sociology"]
+};
+
 
 // French Vocabulary
 const frenchVocab = {
-    GR : "Allemande",
-    FR : "Français",
-    IT : "Italien",
-    EN : "Anglaise",
+    GR: "Allemande",
+    FR: "Français",
+    IT: "Italien",
+    EN: "Anglaise",
     Kanton: "Canton",
     coloring: "Coloration",
     selected: "Sélectionné",
@@ -133,34 +133,36 @@ const frenchVocab = {
     GE: "Formation générale",
     VET: "Formation professionnelle",
     IS: "Solution transitoire",
-    table_head : 'Distribution à l\'échelle suisse',
-    table_lang : 'Répartition linguistique',
-    drop_down_label : "Veuillez choisir une catégorie de formation...",
+    table_head: "Distribution à l'échelle suisse",
+    table_lang: "Répartition linguistique",
+    drop_down_label: "Veuillez choisir une catégorie de formation...",
     banner_title: "Visualisation de l'étude TREE2",
     map: "Carte",
     dev: "Développeur",
     lang: "Langue",
     map_title: "Visualisation de l'étude TREE2 - cantonale",
     cnt: "Continuer",
-    descr : [["Description"], 
-            ["Visualisation de l'étude TREE2",
-            "Les résultats des trois premières vagues d'enquêtes de la cohorte TREE2 sont visualisés sur la carte ci-dessus. Les résultats sont présentés en pourcentage par canton et colorés en conséquence."], 
-            ["Explication des variables",
-            "Dans cette visualisation, les variables concernant l'éducation (t1educ_class_1_r, t2educ_class_1_r, t3educ_class_1_r) ont été catégorisées en formation professionnelle (BB), éducation générale (AB), solution intermédiaire (ZL) et non en formation (NIA), pondérées, puis présentées en pourcentage."
-            + "<p>Groupement des Variables:</p> <ul>"
-            + "<li><b>BB</b>: 2 years VET, 3-4 years VET, Vocational baccalaureate, General baccalaureate</li>"
-            + "<li><b>AB</b>: 10th school year</li>" 
-            + "<li><b>ZL</b>: Internship, Other intermediate solution, Other general education programme (specialized middle school, Waldorf)</li>"
-            + "<li><b>NIA</b>: NET</li>"
-            + "</ul>"],
-            ["Étude TREE", 
-            "TREE (Transitions de l'Éducation Initiale à la Vie Active) est une enquête longitudinale suisse sur la transition des jeunes de l'école à la vie adulte. L'étude se concentre sur les parcours éducatifs et professionnels après la fin de l'école obligatoire. La première échantillon (TREE1) comprend plus de 6'000 jeunes qui ont participé au projet PISA (Programme for International Student Assessment) en 2000 et ont terminé l'école obligatoire la même année. L'échantillon est représentatif au niveau national et linguistique. Un second échantillon (TREE2) de près de 10'000 jeunes est interrogé longitudinalement depuis 2016. Ainsi, TREE est l'une des rares études multi-cohortes au monde qui permet des analyses comparatives entre cohortes."],
-            ["Informations supplémentaires",
-            "Cette visualisation a été développée par Marlene Kulowatz et Ramon Näf dans le cadre d'un projet pour le cours \"Open Data and Open Government\" à l'Université de Berne au semestre de printemps 2023. Les données de l'étude TREE ont été fournies par <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a>."],
-            []    
+    descr: [
+        ["Description"],
+        ["Visualization of the TREE2-Study",
+            "Welcome to the geographical representation of the TREE2-Study! The three interactive maps present the three survey waves of the TREE2 cohort in an illustrative way, allowing users to choose between different education categories such as \"General education\", \"Vocational education & training\", \"Intermediate solution\", and \"Not in education or training\" via a dropdown menu above the map. On the right side of the maps, there is a table displaying the total percentage shares of the education categories nationwide for the specific survey wave. When selecting a canton, the tooltip will display the percentage share of the education categories for the respective canton. Additionally, the selected education category is highlighted in red both in the table and in the tooltip to emphasize it."],
+
+        ["Explanation of the variables",
+            "<ul><li><strong>Formation professionnelle:</strong> Cette variable concerne les participants inscrits dans un programme de formation professionnelle. Cela inclut les individus qui obtiennent un Attestation Fédérale de Formation Professionnelle (AFP), un Certificat Fédéral de Capacité (CFC), ou une Maturité Professionnelle.</li>\
+             <li><strong>Formation générale:</strong> Cette variable concerne les participants inscrits dans un programme d'éducation générale. Cela inclut les individus fréquentant le lycée, ainsi que d'autres parcours d'éducation générale.</li>\
+             <li><strong>Solution transitoire:</strong> Cette variable concerne les participants qui se trouvent dans une solution transitoire avant de commencer une formation professionnelle ou générale. Cela peut inclure la réussite de la 10e année scolaire, un stage, ou d'autres solutions intermédiaires.</li>\
+             <li><strong>Pas en formation:</strong> Cette variable concerne les participants qui ne sont pas inscrits dans un programme de formation formel au moment de la collecte des données.</li></ul>"
         ],
-    footer : ["Étude TREE", "Université de Berne", "Institut de Sociologie"]
+
+        ["TREE-Studie",
+            "TREE (Transitionen von der Erstausbildung ins Erwerbsleben) est une étude longitudinale exhaustive à l'échelle nationale qui examine la transition des adolescents de l'école à l'âge adulte. Cette étude se concentre sur les parcours éducatifs et professionnels après avoir quitté l'école obligatoire. Le premier échantillon (TREE1) comprend plus de 6 000 adolescents qui ont participé au projet Programme for International Student Assessment (PISA) en 2000 et ont terminé la scolarité obligatoire la même année. Cet échantillon est représentatif au niveau national et linguistique. Depuis 2016, un deuxième échantillon (TREE2) de près de 10 000 adolescents est interrogé longitudinalement. Ainsi, TREE fait partie des rares études multi-cohortes dans le monde qui permettent des analyses comparatives entre cohortes."],
+
+        ["Additional Information",
+            "This visualization was designed as a project for the course \"Open Data and Open Government\" at the University of Bern in the spring semester of 2023, in collaboration with Marlene Kulowatz and Ramon Näf. The data for the TREE-Study were provided by <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a>."]
+    ],
+    footer: ["TREE-Studie", "Universität Bern", "Institut für Soziologie"]
 };
+
 
 
 
