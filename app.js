@@ -44,10 +44,10 @@ function run(geoDataURL) {
  * - Initialises the selection menues for the selection of the waves.
  * - Dynamically generates the text of the Website in the chosen Language. 
  * 
- * @link languageSelect#HTMLtitle
- * @link languageSelect#HTMLbanner
- * @link languageSelect#HTMLdescrition
- * @link languageSelect#HTMLfooter
+ * @link util#HTMLtitle
+ * @link util#HTMLbanner
+ * @link util#HTMLdescrition
+ * @link util#HTMLfooter
  * 
  * @param {Object} geoData - geojson data
  * @param {Object} summary - summary of the variables and values of Tree2-Study
@@ -73,8 +73,26 @@ function init(geoData, summary) {
     // HTML text
     HTMLtitle();
     HTMLbanner();
+    HTMLtexts();
     HTMLdescription();
     HTMLfooter();
 }
 
+function floatingBox() {
+        // Select the body element
+        var body = d3.select('body');
 
+        // Append a div element to the body
+        var fixedDiv = body.append('div')
+            .attr('id', 'descr_1')
+            .attr('class', 'card fixed-div p-4 mb-3') // Add Bootstrap card and custom class for styling
+            .style('width', '400px') // Set the width of the card
+            .text('This is a fixed-position card'); // Set card content
+        
+        // Set CSS styles for the fixed position
+        fixedDiv.style('position', 'fixed')
+            .style('top', '27%')  // Position it 50% from the top
+            .style('right', '200px') // Adjust the distance from the right edge
+            .style('transform', 'translateY(-50%)'); // Center it vertically
+        
+}

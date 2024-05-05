@@ -39,20 +39,35 @@ const germanVocab = {
     cnt : "Weiters",
     descr : [["Beschreibung"], 
             ["Visualisierung der TREE2-Studie",
-            "Die Ergebnisse der ersten drei Befragungswellen der TREE2-Kohorte werden auf der obigen Karte visualisiert. Hierbei werden jeweils kantonal die Resultate in Prozent aufgeführt und farblich gekennzeichnet."],
+            "Willkommen zur geographischen Darstellung der TREE2-Studie! Die drei interaktiven Karten präsentieren die drei Befragungswellen der TREE2-Kohorte auf \
+            anschauliche Weise, wobei man zwischen verschiedenen Ausbildungskategorien wie \"Allgemeinbildung\", \"Berufsbildung\", \"Zwischenlösung\" und \"Nicht in Ausbildung\" \
+            über ein Dropdown-Menü oberhalb der Karte wählen kann. Auf der rechten Seite der Karten befindet sich jeweils eine Tabelle, die die gesamten prozentualen Anteile der \
+            Ausbildungskategorien schweizweit für die spezifische Befragungswelle darstellt. Bei der Auswahl eines Kantons werde durch einen Tooltip die prozentualen Anteil der \
+            Ausbildungskategorien des entsprechenden Kantons angezeigt. Zusätzlich wird die ausgewählte Ausbildungskategorie sowohl \
+            in der Tabelle als auch im Tooltip rot markiert, um sie deutlich hervorzuheben."],
+            
             ["Erklärung zu den Variablen",
-            "<p>In dieser Visualisierung wurden die Variablen bezüglich der Ausbildung (t1educ_class_1_r, t2educ_class_1_r, t3educ_class_1_r) in Berufsausbildung (BB), Allgemeinbildung (AB), Zwischenlösung (ZL) und Nicht in Ausbildung (NIA) unterteil, gewichtet und dann prozentual dargestellt.</p>"
-            + "<p>Gurppierung der Variablen:</p> <ul>"
-            + "<li><b>BB</b>: 2 years VET, 3-4 years VET, Vocational baccalaureate, General baccalaureate</li>"
-            + "<li><b>AB</b>: 10th school year</li>" 
-            + "<li><b>ZL</b>: Internship, Other intermediate solution, Other general education programme (specialized middle school, Waldorf)</li>"
-            + "<li><b>NIA</b>: NET</li>"
-            + "</ul>"],
+            "<ul><li><strong>Berufsbildung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich in einem berufsbildenden Ausbildungsprogramm befinden. \
+            Dies umfasst Personen, die ein Eidgenössisches Berufsattest (EBA), eine Berufslehre mit einem Eidgenössischen Fähigkeitszeugnis (EFZ) oder eine Berufsmaturität absolvieren.</li>\
+             <li><strong>Allgemeinbildung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich in einem allgemeinbildenden Ausbildungsprogramm befinden. \
+             Dazu gehören Personen, die das Gymnasium besuchen, sowie andere allgemeinbildende Ausbildungswege.</li>\
+             <li><strong>Zwischenlösung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich in einer Übergangslösung befinden, bevor sie eine berufliche \
+             oder allgemeinbildende Ausbildung beginnen. Dies kann das Absolvieren des 10. Schuljahres, ein Praktikum oder andere Zwischenlösungen umfassen.</li>\
+             <li><strong>Nicht in Ausbildung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich zum Zeitpunkt der Datenerhebung nicht in einem formellen Ausbildungsprogramm befinden.</li></ul>"
+            ],
+
             ["TREE-Studie", 
-            "TREE (Transitionen von der Erstausbildung ins Erwerbsleben) ist eine gesamtschweizerische, längsschnittlich angelegte Befragung zum Übergang Jugendlicher von der Schule ins Erwachsenenleben (Transition). Im Zentrum der Untersuchung stehen die Ausbildungs- und Erwerbsverläufe nach Austritt aus der obligatorischen Schule. Die erste Stichprobe (TREE1) umfasst über 6'000 Jugendliche, die im Jahr 2000 am Projekt PISA (Programme for International Student Assessment) teilnahmen und im selben Jahr aus der obligatorischen Schulpflicht entlassen wurden. Die Stichprobe ist national nd sprachregional repräsentativ. Eine zweiteStichprobe (TREE2) von fast 10'000 Jugendlichen wird seit 2016 längsschnittlich befragt. Damit gehört TREE zu einer der weltweit wenigen Multi-Kohorten-Studien, welche kohortenvergleichende Analysen ermöglichen."],
+            "TREE (Transitionen von der Erstausbildung ins Erwerbsleben) ist eine umfassende, schweizweite Langzeitstudie, die den Übergang von Jugendlichen von der Schule ins \
+            Erwachsenenleben (Transition) untersucht. Im Fokus dieser Untersuchung stehen die Bildungs- und Karriereverläufe nach dem Verlassen der obligatorischen Schule. Die  \
+            erste Stichprobe (TREE1) umfasst mehr als 6.000 Jugendliche, die im Jahr 2000 am PISA-Projekt (Programme for International Student Assessment) teilgenommen haben und im \
+            selben Jahr die obligatorische Schulpflicht abgeschlossen haben. Diese Stichprobe ist national und sprachregional repräsentativ. Seit 2016 wird eine zweite Stichprobe \
+            (TREE2) von fast 10.000 Jugendlichen längschnittlich befragt. Dadurch zählt TREE zu einer der weltweit wenigen Multi-Kohorten-Studien, die kohortenübergreifende Vergleiche ermöglichen."
+            ],
+            
             ["Weiteres",
-            "Diese Visualisierung wurde von Marlene Kulowatz und Ramon Näf als Projekt für die Vorlesung \"Open Data and Open Government\" an der Universität Bern im Frühjahressemester 2023 entwickelt. Die Daten zur TREE-Studie wurden von <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a> zur Verfügung gestellt."],
-            []
+            "Diese Visualisierung wurde unter Zusammenarbeit von Marlene Kulowatz und Ramon Näf als Projekt für die Vorlesung \"Open Data and Open Government\" an der Universität Bern im \
+            Frühjahressemester 2023 entworfen. Die Daten zur TREE-Studie wurden von <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a> \
+            zur Verfügung gestellt."]
             ],
     footer : ["TREE-Studie", "Universität Bern", "Institut für Soziologie"]
 };
@@ -225,6 +240,13 @@ function HTMLdescription() {
         .html(text);
 }
 
+function HTMLtexts() {
+
+    d3.select("#descr_1")
+        .html(vocab['descr_1']);
+
+}
+
 function HTMLfooter() {
     let footer = vocab.footer;
     d3.select("#tree")
@@ -233,4 +255,8 @@ function HTMLfooter() {
                 + "<dd>" + footer[2] + "</dd>"
                 + "<a class='small' href='https://www.tree.unibe.ch/'>www.tree.unibe.ch</a>");
 
+}
+
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }

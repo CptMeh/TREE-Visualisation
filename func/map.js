@@ -59,26 +59,33 @@ class Map {
      */
     initContainers() {
 
-        if (window.innerWidth >= window.innerHeight) {
-            if (this.isMobile()) {
-                this.#width = window.innerWidth*0.7;
-                this.#height = this.#width*0.8;
-            } else {
-                this.#width = window.innerWidth*0.3;
-                this.#height = this.#width*0.8;
-            }
-        
+        if (isMobile()) {
+            this.#width = document.getElementById('maps').offsetWidth*0.7;
+            this.#height = this.#width*0.8;
         } else {
-            this.#width = window.innerHeight*0.3;
+            this.#width = document.getElementById('maps').offsetWidth*0.6;
             this.#height = this.#width*0.8;
         }
-
+        
         
         if (d3.select("#map_" + this.#wave).size() === 0) {
+            let wave = 0;
+
+            switch(this.#wave) {
+                case 'w1_edu' : wave = 1; break;
+                case 'w2_edu' : wave = 2; break;
+                case 'w3_edu' : wave = 3; break;
+    
+            }
             this.#map_div = this.#container
                 .append("div")
                 .attr("id", "map_" + this.#wave)
                 .attr("class", "row");
+            
+            this.#map_div.append('div')
+                        .classed('row', true)
+                        .html(`<h3>${vocab['wave']} ${wave}</h3>`);
+                
         }
         
 
@@ -91,7 +98,7 @@ class Map {
                         .attr("height", this.#height);
 
 
-        if (!this.isMobile()) {
+        if (!isMobile()) {
             this.#svg.attr('class', 'col-8 order-1')    
         } else {
             this.#svg.style("margin-top", "50px");
@@ -243,8 +250,8 @@ class Map {
             const varSelect = map.getMapDiv()
                             .append("select")
                             .attr("id", "dropdown-button_" + this.#wave)
-                            .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
-                            .style("position", "absolute")
+                            .classed("dropdown btn btn-secondary btn-lg btn-block row order-1", true)
+                            .style('left', '25px')
                             .style("width", this.#width + "px");
 
             // Add a default option that is not selectable
@@ -273,51 +280,47 @@ class Map {
 
     
     createTable(entries, languages) {
-        if (d3.select('#table_container_' + this.#wave).size() === 0) {
+        if (d3.select('#table_div_' + this.#wave).size() === 0) {
             this.#map_div.append('div')
-                .attr('id', 'table_container_' + this.#wave)
+                .attr('id', 'table_div_' + this.#wave)
                 .style("width", this.#width + "px");
         
         } 
-        const container_div = d3.select("#table_container_" + this.#wave).style("width", this.#width + "px");
+        const table_div = d3.select("#table_div_" + this.#wave)
+                            .style("width", this.#width + "px");
                 
-        container_div.selectAll('*').remove();
+        table_div.selectAll('*').remove();
         
-        if (!this.isMobile()) {
-            container_div.attr('class', 'col order-2')
+        if (!isMobile()) {
+            table_div.attr('class', 'col order-2')
         }
 
-        const table_div = container_div.append('div')
-            .attr('id', 'table_' + this.#wave + '_div')
-    
-    
         const table = table_div.append('table')
-            .attr('id', 'table_' + this.#wave)
-            .attr('class', 'table table-striped table-bordered');
+                                .attr('id', 'table_' + this.#wave)
+                                .attr('class', 'table table-striped table-bordered');
     
-        const thead = table.append('thead');
         const tbody = table.append('tbody');
-    
-        thead.html('<p>' + vocab['table_descr'] + '</p>'); 
-    
-        // Header between entryRows and languageRows
+        
+        tbody.append('tr')
+                .append('th')
+                .attr('colspan', 2)
+                .text(vocab['table_head']);
 
-    
-
-
-        this.addRows(entries, tbody, 'table_head');
-        this.addRows(languages, tbody, 'table_lang');
+        this.addRows(entries, tbody, 'tr.entry');
     
         
+        tbody.append('tr')
+                .append('th')
+                .attr('colspan', 2)
+                .text(vocab['table_lang']);
+
+        this.addRows(languages, tbody, 'tr.language');
     }
 
-    addRows(entries, tbody, header) {
-        tbody.append('tr').append('th')
-            .attr('colspan', 2)
-            .text(vocab[header]);
-
+    addRows(entries, tbody, type) {
+        
         // Bind and append rows for the entry data
-        const rows = tbody.selectAll('tr.entry')
+        const rows = tbody.selectAll(type)
                 .data(Object.entries(entries))
                 .enter()
                 .append('tr')
@@ -348,6 +351,9 @@ class Map {
      */
     redraw() {
         this.#svg.remove();
+        this.#tooltip
+        .style("opacity", 0.0)
+        .style("z-index", "0")
         this.drawMap()
     }
 
@@ -394,7 +400,15 @@ class Map {
      * @returns {string} the initialised label
      */
     initLabel() {
-        return "<p><b>" + this.#vocab["wave"] + " " + vocab[this.#wave] + "</b></p>"
+        let wave = 0;
+
+        switch(this.#wave) {
+            case 'w1_edu' : wave = 1; break;
+            case 'w2_edu' : wave = 2; break;
+            case 'w3_edu' : wave = 3; break;
+
+        }
+        return "<p><b>" + this.#vocab["wave"] + " " + wave + "</b></p>"
     }
 
     /**
@@ -408,10 +422,6 @@ class Map {
                     + "<p>" + this.#vocab["NIA"] + " (NIA): - </p>";
 
         d3.select("#canton-descr").html(label);
-    }
-
-    isMobile() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
     
 
