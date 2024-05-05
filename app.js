@@ -1,40 +1,40 @@
+/***************************************************
+TODO: Change from dev branch back to main!!!!!!!!!!!
+****************************************************/
+
+// Online URL for the geo data for map of Switzerland with the TREE2-Data
+const geoDataURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/dev/data/geo-data/map_data.geojson'
+const summaryURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/dev/data/study-data/summary.json'
+
+var maps = []
 // Initialise the selected language (See languageSelect.js)
 const vocab = languageSelect();
 
-// Online URL for the geo data for map of Switzerland
-const backupURL = "https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/geo-data/landesforstinventar-kantone_2056.geojson"
 
-
-const geoDataURL = "./data/geo-data/landesforstinventar-kantone_2056.geojson"
-
-// Online URL Tree2 data. This takes the data from the git repo.
-const backupdTreeURL = "https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/study-data/currated_data.csv"
-
-// Local URL for Tree2 data
-const treeDataURL = "./data/study-data/currated_data.csv"
-
-var maps = []
-
-//createAll(geoDataURL, treeDataURL)
-run(backupURL, backupdTreeURL)
+//run(geoDataURL, treeDataURL)
+run(geoDataURL)
 
 /**
  * Creates the Visualisation of the data at the given URLs.
  * 
- * @param geoDataURL  String the URL to the Data source of the geo data
- * @param treeDataURL String the URL to the Data source of the study data
+ * @param {String} geoDataURL - the URL to the Data source of the geo data
+ * @param {String} summaryURL - the URL to the Data source of the study data
 **/
-function run(geoDataURL, treeDataURL) {
-  // Get the map- and TREE-data and check if everything worked. Then use the drawMap function to render the map.
-  d3.json(geoDataURL).then(function(geoData) {
-    // GeoJSON data loaded successfully
-    d3.csv(treeDataURL).then(function(treeData) {
-      // CSV data loaded successfully
-      init(geoData, treeData);
-    }).catch(function(error) {
-      console.error("Something went wrong loading the tree data: " + error);
+function run(geoDataURL) {
+    // Get the map- and TREE-data and check if everything worked. Then use the drawMap function to render the map.
+    d3.json(geoDataURL).then(function(geoData) {
+        // GeoJSON data loaded successfully
+        d3.json(summaryURL).then(function(summary) {
+        // CSV data loaded successfully
+        console.log(geoData);
+        console.log(summary);
+
+        init(geoData, summary);
+
+        }).catch(function(error) {
+            console.error("Something went wrong loading the data: " + error);
+        });
     });
-  });
 }
 
 /**
@@ -44,46 +44,55 @@ function run(geoDataURL, treeDataURL) {
  * - Initialises the selection menues for the selection of the waves.
  * - Dynamically generates the text of the Website in the chosen Language. 
  * 
- * @link languageSelect#HTMLtitle
- * @link languageSelect#HTMLbanner
- * @link languageSelect#HTMLdescrition
- * @link languageSelect#HTMLfooter
+ * @link util#HTMLtitle
+ * @link util#HTMLbanner
+ * @link util#HTMLdescrition
+ * @link util#HTMLfooter
  * 
- * @param geoData  Array?? geojson data
- * @param treeData Array?? variables and values of Tree2-Study
+ * @param {Object} geoData - geojson data
+ * @param {Object} summary - summary of the variables and values of Tree2-Study
 **/
-function init(geoData, treeData) {
-  prepareData(geoData, treeData);
+function init(geoData, summary) {
+    maps = [new Map(geoData, summary, 'w1_edu', vocab), 
+    new Map(geoData, summary, 'w2_edu', vocab), 
+    new Map(geoData, summary, 'w3_edu', vocab)];
 
+    for (const m of maps) {
+        m.setSelected('GE')
+        m.drawMap();
 
+    }
 
-  createMaps(geoData);
+    // For some reason the maps don't resize on widow resizing. So, now they just get deleted and recreated...
+    window.addEventListener('resize', () => {
+        for (const m of maps) {
+            m.redraw();
+        }    
+    });
 
-
-  // For some reason the maps don't resize on widow resizing. So, now they just get deleted and recreated...
-  window.addEventListener('resize', () => {
-    redraw();
-  });
-
-  // HTML text
-  HTMLtitle();
-  HTMLbanner();
-  HTMLdescription();
-  HTMLfooter();
+    // HTML text
+    HTMLtitle();
+    HTMLbanner();
+    HTMLtexts();
+    HTMLdescription();
+    HTMLfooter();
 }
 
-function redraw() {
-  for (const m of maps) {
-    m.redraw();
-  }
+function floatingBox() {
+        // Select the body element
+        var body = d3.select('body');
+
+        // Append a div element to the body
+        var fixedDiv = body.append('div')
+            .attr('id', 'descr_1')
+            .attr('class', 'card fixed-div p-4 mb-3') // Add Bootstrap card and custom class for styling
+            .style('width', '400px') // Set the width of the card
+            .text('This is a fixed-position card'); // Set card content
+        
+        // Set CSS styles for the fixed position
+        fixedDiv.style('position', 'fixed')
+            .style('top', '27%')  // Position it 50% from the top
+            .style('right', '200px') // Adjust the distance from the right edge
+            .style('transform', 'translateY(-50%)'); // Center it vertically
+        
 }
-
-function createMaps(geoData) {
-  maps = [new Map(geoData, 1, vocab), new Map(geoData, 2, vocab), new Map(geoData, 3, vocab)];
-
-  for (const m of maps) {
-    m.drawMap();
-  }
-}
-
-
