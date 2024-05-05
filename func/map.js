@@ -12,13 +12,13 @@ class Map {
     #summary;
 
     #wave; 
-    #selected;  // NEEDS TO BE INITIALIZED OUTSIDE OF THIS CLASS! the currently selected variable used to colour in the map parts
+    #selected;  // MUST BE INITIALIZED OUTSIDE OF THIS CLASS! the currently selected variable used to colour in the map parts
     #vocab;
 
     #width;
     #height;
-    #container; // Contains the map_div, the wave select, and the data table
-    #map_div; // Only contains the svg for the map and the tooltips
+    #container; // Contains all the map divs
+    #map_div; // Contains the svg for the map, the tooltips, the wave drop down, and the data table
     #svg;
     #tooltip;
     
@@ -47,17 +47,17 @@ class Map {
      * Also initializes the description.
      */
     drawMap() {
-        this.setUpContainers();
-        this.setupTooltip();
+        this.initContainers();
+        this.initTooltip();
         this.renderMap();
-        this.setupEventListeners(); // This order is important, because the tooltip wont show up /behind the map otherwise.
+        this.initEventListeners(); // This order is important, because the tooltip wont show up /behind the map otherwise.
         this.initDescr();
     }
 
     /**
      * Sets up the containers for the map and SVG.
      */
-    setUpContainers() {
+    initContainers() {
 
         if (window.innerWidth >= window.innerHeight) {
             if (this.isMobile()) {
@@ -74,10 +74,13 @@ class Map {
         }
 
         
-        this.#map_div = this.#container
-            .append("div")
-            .attr("id", "map_" + this.#wave)
-            .attr("class", "row");
+        if (d3.select("#map_" + this.#wave).size() === 0) {
+            this.#map_div = this.#container
+                .append("div")
+                .attr("id", "map_" + this.#wave)
+                .attr("class", "row");
+        }
+        
 
         this.addDropDown(this);
 
@@ -97,11 +100,10 @@ class Map {
         this.createTable(this.#summary[this.#wave], this.#summary['lang']);
     }
 
-
     /**
      * Sets up the tooltip for displaying additional information on hover.
      */
-    setupTooltip() {
+    initTooltip() {
         // Create tooltip
         this.#tooltip = this.#map_div.append("div")
             .attr("id", "tooltip_" + this.#wave)
@@ -121,7 +123,7 @@ class Map {
     /**
      * Sets up event listeners for mouse events on map elements.
      */
-    setupEventListeners() {
+    initEventListeners() {
         let this_map_instance = this; // To avoid confusion for the event listeners, since "this" sometimes has a different context when using d3.js
     
         let mousemove = function(d) {
@@ -239,15 +241,15 @@ class Map {
         if (d3.select("#dropdown-button_" + this.#wave).size() === 0) {
             // Create the dropdown select element
             const varSelect = map.getMapDiv()
-                .append("select")
-                .attr("id", "dropdown-button_" + this.#wave)
-                .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
-                .style("position", "absolute")
-                .style("width", this.#width + "px");
+                            .append("select")
+                            .attr("id", "dropdown-button_" + this.#wave)
+                            .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
+                            .style("position", "absolute")
+                            .style("width", this.#width + "px");
 
             // Add a default option that is not selectable
             varSelect.append("option")
-                .text("Select an option...")
+                .text(vocab['drop_down_label'])
                 .attr("disabled", "")
                 .attr("selected", "");
 
@@ -271,10 +273,16 @@ class Map {
 
     
     createTable(entries, languages) {
-        const container_div = this.#map_div.append('div')
-            .attr('id', 'container_' + this.#wave)
-            .style("width", this.#width + "px");
-    
+        if (d3.select('#table_container_' + this.#wave).size() === 0) {
+            this.#map_div.append('div')
+                .attr('id', 'table_container_' + this.#wave)
+                .style("width", this.#width + "px");
+        
+        } 
+        const container_div = d3.select("#table_container_" + this.#wave).style("width", this.#width + "px");
+                
+        container_div.selectAll('*').remove();
+        
         if (!this.isMobile()) {
             container_div.attr('class', 'col order-2')
         }
@@ -290,21 +298,32 @@ class Map {
         const thead = table.append('thead');
         const tbody = table.append('tbody');
     
-        thead.html('<p>' + vocab['table_descr'] + '</p>'); //TODO: vocab
+        thead.html('<p>' + vocab['table_descr'] + '</p>'); 
     
         // Header between entryRows and languageRows
+
+    
+
+
+        this.addRows(entries, tbody, 'table_head');
+        this.addRows(languages, tbody, 'table_lang');
+    
+        
+    }
+
+    addRows(entries, tbody, header) {
         tbody.append('tr').append('th')
             .attr('colspan', 2)
-            .text(vocab['table_head']);
-    
+            .text(vocab[header]);
+
         // Bind and append rows for the entry data
-        const entryRows = tbody.selectAll('tr.entry')
-            .data(Object.entries(entries))
-            .enter()
-            .append('tr')
-            .classed('entry', true);
-    
-        entryRows.append('td')
+        const rows = tbody.selectAll('tr.entry')
+                .data(Object.entries(entries))
+                .enter()
+                .append('tr')
+                .classed('entry', true);
+
+        rows.append('td')
                 .html(d => {
                     if (d[0] === this.#selected) {
                         return `<span class="highlight">${vocab[d[0]]} (${d[0]})</span>`;
@@ -313,41 +332,14 @@ class Map {
                 });
     
 
-        entryRows.append('td')
+        rows.append('td')
                 .html(d => {
                     if (d[0] === this.#selected) {
                         return `<span class="highlight">${d[1]}%</span>`;
                     } 
                     return `${d[1]}%`;
                 });
-    
-        tbody.append('tr').append('th')
-            .attr('colspan', 2)
-            .text(vocab['lang']);
 
-        // Bind and append rows for the language data
-        const languageRows = tbody.selectAll('tr.language')
-            .data(Object.entries(languages))
-            .enter()
-            .append('tr')
-            .classed('language', true);
-    
-        languageRows.append('td')
-            .html(d => {
-                if (d[0] === this.#selected) {
-                    return `<span class="highlight">${vocab[d[0]]} (${d[0]})</span>`;
-                } 
-                return `${vocab[d[0]]} (${d[0]})`;
-            });
-
-
-        languageRows.append('td')
-            .html(d => {
-                if (d[0] === this.#selected) {
-                    return `<span class="highlight">${d[1]}%</span>`;
-                } 
-                return `${d[1]}%`;
-            });
     }
     
 
@@ -356,9 +348,7 @@ class Map {
      */
     redraw() {
         this.#svg.remove();
-        this.#map_div.remove();
-
-        this.drawMap();
+        this.drawMap()
     }
 
 

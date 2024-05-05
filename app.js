@@ -65,7 +65,9 @@ function init(geoData, summary) {
 
     // For some reason the maps don't resize on widow resizing. So, now they just get deleted and recreated...
     window.addEventListener('resize', () => {
-        redraw();
+        for (const m of maps) {
+            m.redraw();
+        }    
     });
 
     // HTML text
@@ -75,9 +77,4 @@ function init(geoData, summary) {
     HTMLfooter();
 }
 
-function redraw() {
-    for (const m of maps) {
-        m.redraw();
-    }
-}
 
