@@ -1,10 +1,6 @@
-/***************************************************
-TODO: Change from dev branch back to main!!!!!!!!!!!
-****************************************************/
-
 // Online URL for the geo data for map of Switzerland with the TREE2-Data
-const geoDataURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/dev/data/geo-data/map_data.geojson'
-const summaryURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/dev/data/study-data/summary.json'
+const geoDataURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/geo-data/map_data.geojson'
+const summaryURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/study-data/summary.json'
 
 var maps = []
 // Initialise the selected language (See languageSelect.js)
@@ -26,8 +22,6 @@ function run(geoDataURL) {
         // GeoJSON data loaded successfully
         d3.json(summaryURL).then(function(summary) {
         // CSV data loaded successfully
-        console.log(geoData);
-        console.log(summary);
 
         init(geoData, summary);
 
