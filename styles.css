@@ -41,6 +41,8 @@
   text-decoration: underline; /* Add underline on hover */
 }
 
+.highlight { color: red; }
+
 .full-size {
   height: 100%;
   width: 100%;

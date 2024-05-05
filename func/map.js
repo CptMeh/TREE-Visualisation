@@ -12,7 +12,7 @@ class Map {
     #summary;
 
     #wave; 
-    #selected;  // the currently selected variable used to colour in the map parts
+    #selected;  // NEEDS TO BE INITIALIZED OUTSIDE OF THIS CLASS! the currently selected variable used to colour in the map parts
     #vocab;
 
     #width;
@@ -34,7 +34,6 @@ class Map {
         this.#wave = wave;
         this.#geoData = geoData;
         this.#summary = summary;
-        this.#selected = "GE"; // Chose BB to be selected at the start
         this.#vocab = vocab;
 
         this.#container = d3.select("#maps")
@@ -51,12 +50,8 @@ class Map {
         this.setUpContainers();
         this.setupTooltip();
         this.renderMap();
-
-        this.setupEventListeners();
-
+        this.setupEventListeners(); // This order is important, because the tooltip wont show up /behind the map otherwise.
         this.initDescr();
-        console.log("done")
-
     }
 
     /**
@@ -119,7 +114,8 @@ class Map {
             .style("padding", "5px")
             .style("position","absolute")
             .style("overflow", "scroll")
-            .style("pointer-events", "none");
+            .style("pointer-events", "none")    
+            .style("max-width", "150px"); // Adjust the maximum height as needed
     }
     
     /**
@@ -244,26 +240,35 @@ class Map {
             // Create the dropdown select element
             const varSelect = map.getMapDiv()
                 .append("select")
-                    .attr("id", "dropdown-button_" + this.#wave)
-                    .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
-                    .style("position", "absolute")
-                    .style("width", this.#width + "px")
-                    .on("change", function() {
-                        map.setSelected(this.value);
-                        map.redraw();
-                    });
+                .attr("id", "dropdown-button_" + this.#wave)
+                .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
+                .style("position", "absolute")
+                .style("width", this.#width + "px");
+
+            // Add a default option that is not selectable
+            varSelect.append("option")
+                .text("Select an option...")
+                .attr("disabled", "")
+                .attr("selected", "");
 
             // Populate the dropdown with options
-            varSelect.selectAll("option")
-                .data(["VET", "GE", "IS", "NET"])
+            varSelect.selectAll(null) // Use null for better separation of options
+                .data(["GE", "VET", "IS", "NET"])
                 .enter()
                 .append("option")
                 .attr("value", d => d)
-                .text(d => vocab[d]); // TODO: Vocab
+                .text(d => vocab[d]);
+
+            // Handle change event
+            varSelect.on("change", function() {
+                map.setSelected(this.value);
+                map.redraw();
+            });
         } else {
             d3.select("#dropdown-button_" + this.#wave).style("width", this.#width + "px");
         }
     }
+
     
     createTable(entries, languages) {
         const container_div = this.#map_div.append('div')
@@ -300,14 +305,26 @@ class Map {
             .classed('entry', true);
     
         entryRows.append('td')
-            .text(d => vocab[d[0]]); //TODO: vocab
+                .html(d => {
+                    if (d[0] === this.#selected) {
+                        return `<span class="highlight">${vocab[d[0]]} (${d[0]})</span>`;
+                    } 
+                    return `${vocab[d[0]]} (${d[0]})`;
+                });
     
+
         entryRows.append('td')
-            .text(d => d[1] + '%');
+                .html(d => {
+                    if (d[0] === this.#selected) {
+                        return `<span class="highlight">${d[1]}%</span>`;
+                    } 
+                    return `${d[1]}%`;
+                });
     
         tbody.append('tr').append('th')
             .attr('colspan', 2)
             .text(vocab['lang']);
+
         // Bind and append rows for the language data
         const languageRows = tbody.selectAll('tr.language')
             .data(Object.entries(languages))
@@ -316,13 +333,22 @@ class Map {
             .classed('language', true);
     
         languageRows.append('td')
-            .text(d => vocab[d[0]]); //TODO: vocab
-    
+            .html(d => {
+                if (d[0] === this.#selected) {
+                    return `<span class="highlight">${vocab[d[0]]} (${d[0]})</span>`;
+                } 
+                return `${vocab[d[0]]} (${d[0]})`;
+            });
+
+
         languageRows.append('td')
-            .text(d => d[1] + '%');
+            .html(d => {
+                if (d[0] === this.#selected) {
+                    return `<span class="highlight">${d[1]}%</span>`;
+                } 
+                return `${d[1]}%`;
+            });
     }
-    
-    
     
 
     /**
@@ -334,7 +360,6 @@ class Map {
 
         this.drawMap();
     }
-
 
 
     /** 
