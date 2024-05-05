@@ -1,19 +1,22 @@
-const COLORING = {"NIA" : "#a00000", 
-                    "AB" : "#00566b", 
-                    "BB" : "#1e6b00", 
-                    "ZL" : "#e48100"}
+const COLORING = {"NET" : "#a00000", 
+                    "GE" : "#00566b", 
+                    "VET" : "#1e6b00", 
+                    "IS" : "#e48100"}
 
 
 /**
  * Responsible for creating and maintaining a visualisation of the Tree2-Study data by binding it to the regions of the given Geo data.
  */
 class Map {   
-    #wave; 
-    #width;
-    #height;
     #geoData;
+    #summary;
+
+    #wave; 
     #selected;  // the currently selected variable used to colour in the map parts
     #vocab;
+
+    #width;
+    #height;
     #container; // Contains the map_div, the wave select, and the data table
     #map_div; // Only contains the svg for the map and the tooltips
     #svg;
@@ -27,9 +30,10 @@ class Map {
      * @param {int} wave        the selected questionair wave of the Tree2 Studie
      * @param {dict} vocab      the vocabulary of all the text in the chosen language 
      */
-    constructor(geoData, wave, vocab) {
+    constructor(geoData, summary, wave, vocab) {
         this.#wave = wave;
         this.#geoData = geoData;
+        this.#summary = summary;
         this.#selected = "GE"; // Chose BB to be selected at the start
         this.#vocab = vocab;
 
@@ -47,33 +51,52 @@ class Map {
         this.setUpContainers();
         this.setupTooltip();
         this.renderMap();
+
         this.setupEventListeners();
+
         this.initDescr();
+        console.log("done")
+
     }
 
     /**
      * Sets up the containers for the map and SVG.
      */
     setUpContainers() {
-        this.#width = window.innerWidth*0.4;
-        this.#height = this.#width*0.8;
 
-        this.addDropDown(this);
+        if (window.innerWidth >= window.innerHeight) {
+            if (this.isMobile()) {
+                this.#width = window.innerWidth*0.7;
+                this.#height = this.#width*0.8;
+            } else {
+                this.#width = window.innerWidth*0.5;
+                this.#height = this.#width*0.8;
+            }
+        
+        } else {
+            this.#width = window.innerHeight*0.4;
+            this.#height = this.#width*0.8;
+        }
+
 
         this.#map_div = this.#container
             .append("div")
             .attr("id", "map_" + this.#wave)
             .attr("class", "col order-1");
 
+        this.addDropDown(this);
+
+
         this.#svg = this.#map_div
                         .append("svg")
-                        .classed("col", true)
+                        .classed("col order-1", true)
                         .attr("width", this.#width)
                         .attr("height", this.#height);
 
-        //this.addTable();
+        this.createTable(this.#summary[this.#wave], this.#summary['lang']);
     }
-    
+
+
     /**
      * Sets up the tooltip for displaying additional information on hover.
      */
@@ -145,11 +168,12 @@ class Map {
         // Calculate max scale
         for (let d in features) {
             let detail = features[d].properties.details[this.#wave][this.#selected];
+
             if (detail > maxScale) {
                 maxScale = detail;
             }
         }
-    
+        
         // Define color scale
         const colorScale = d3.scaleLinear()
             .domain([0, maxScale])
@@ -188,11 +212,12 @@ class Map {
             .style("stroke-width", 0.5)
             .style("stroke", "white")
             .style("fill", d => {
-                return d.properties.details[this.#wave][this.#selected] === 0 ? "url(#crosshatch)" : colorScale(d.properties.details[this.#wave][this.#selected]);
+                return d.properties.details[this.#wave][this.#selected] === 0.0 ? "url(#crosshatch)" : colorScale(d.properties.details[this.#wave][this.#selected]);
             });
 
         this.renderCantonText(path_projection)
     }
+
     
     /**
      * Renders the text for cantons on the map.
@@ -222,7 +247,7 @@ class Map {
     addDropDown(map) {
         if (d3.select("#dropdown-button_" + this.#wave).size() === 0) {
             // Create the dropdown select element
-            const varSelect = this.#container
+            const varSelect = map.getMapDiv()
                 .append("select")
                     .attr("id", "dropdown-button_" + this.#wave)
                     .classed("dropdown btn btn-secondary btn-lg btn-block col order-1", true)
@@ -235,48 +260,57 @@ class Map {
 
             // Populate the dropdown with options
             varSelect.selectAll("option")
-                .data(["BB", "AB", "ZL", "NIA"])
+                .data(["VET", "GE", "IS", "NET"])
                 .enter()
                 .append("option")
                 .attr("value", d => d)
-                .text(d => vocab[d]);
+                .text(d => vocab[d]); // TODO: Vocab
         } else {
             d3.select("#dropdown-button_" + this.#wave).style("width", this.#width + "px");
         }
     }
     
-    addTable() {
-        let table =this.#container.append("table");
-        
-        // Add a class to the table for styling (optional)
-        table.attr("class", "data-table");
+    createTable(entries, languages) {
+        const table_div = this.#map_div.append('div')
+                                .attr('id', 'table_' + this.#wave + '_div')
+                                .attr('classed', 'col order-1')
+                                .attr("width", 8)
+                                .attr("height", 8);
+        const table = table_div.append('table')
+                                .attr('id', 'table_' + this.#wave)
+                                .attr('class', 'table table-striped table-bordered');
+        const thead = table.append('thead');
+        const tbody = table.append('tbody');
 
-        // Create the header row
-        const header = table.append("thead").append("tr");
-
-        // Define the columns for the header, including the country column
-        const columns = ["lang", "BB", "AB", "ZL", "NIA"];
-
-        // Append the header cells
-        header.selectAll("th")
-            .data(columns)
+        thead.html('<p>' + vocab['table_descr'] + '</p>'); //TODO: vocab
+       
+        // Bind and append rows for the initial set of data
+        const entryRows = tbody.selectAll('tr.entry')
+            .data(Object.entries(entries))
             .enter()
-            .append("th")
-            .text(column => column);
+            .append('tr')
+            .classed('entry', true); // Use a class to differentiate
 
-        // Create rows for each data entry
-        const rows = table.append("tbody")
-            .selectAll("tr")
-            .data(data)
+        // Bind and append rows for the language data
+        const languageRows = tbody.selectAll('tr.language')
+            .data(Object.entries(languages))
             .enter()
-            .append("tr");
+            .append('tr')
+            .classed('language', true); // Use a class to differentiate
 
-        // Create cells for each row
-        rows.selectAll("td")
-            .data(row => columns.map(column => ({ value: row[column], column })))
-            .enter()
-            .append("td")
-            .text(d => d.value);
+
+        entryRows.append('td')
+            .text(d => vocab[d[0]]); //TODO: vocab
+
+        entryRows.append('td')
+            .text(d => d[1]);
+
+        languageRows.append('td') 
+            .text(d => vocab[d[0]]); //TODO: vocab
+
+        languageRows.append('td')
+            .text(d => d[1]);
+
 
     }
 
@@ -290,17 +324,7 @@ class Map {
         this.drawMap();
     }
 
-    /**  
-     * Creates the permanent description of the values, shown in the tool tip.
-     *  
-     * @param event     
-     * @param this_map  Object this instance of the map class
-    */
-    permaDescr(event, this_map) {
-        const descr = this_map.getMapDiv()
-                                .append("div");
-        descr.html(this_map.description(event, false));
-    }
+
 
     /** 
      * Creates the contents of the tool tip / the description. 
@@ -310,11 +334,11 @@ class Map {
      * 
      * @returns {string} the label for the tool tip / description formatted to be compilable as HTML-code.
     */
-    description(event, isTooltip) {
+    description(event) {
         const canton = event.target.__data__;
         const details = canton.properties.details;
         const lang = localStorage.getItem('lang') || "0";
-        let label = this.initLabel(isTooltip);
+        let label = this.initLabel(true);
 
         switch(lang) {
             case "0" : label += "<p><b>" + canton.properties.KantonName_de + "</b></p>"; break;
@@ -325,16 +349,13 @@ class Map {
         for (let key in details[this.#wave]) {
 
             if (key != "sum"){
-                if (isTooltip) {
-                    if (key === this.#selected) {
-                        label += "<p style='color:red;'>" + key + ":  " + details[this.#wave][key] + "%</p>";
-                    } else {
-                        label += "<p>" + key + ":  " + details[this.#wave][key] + "%</p>";
-                    }
 
+                if (key === this.#selected) {
+                    label += "<p style='color:red;'>" + key + ":  " + details[this.#wave][key] + "%</p>";
                 } else {
-                    label += "<p>" + this.#vocab[key] + " (" + key + "):  " + details[this.#wave][key] + "%</p>";
+                    label += "<p>" + key + ":  " + details[this.#wave][key] + "%</p>";
                 }
+
             }
         }
         
@@ -342,22 +363,16 @@ class Map {
     }
 
     /**
-     * Initialises the label based on if it is for a tool tip or not:
-     * - if isTooltip == True: the label is initialised with the wave number
-     * - else: the label is initialiesd with the word "selected survey wave 'number'" in the chosen language.
-     * 
-     * 
-     * @param {boolean} isTooltip 
+     * Initialises the label based for a tool tip.
      * 
      * @returns {string} the initialised label
      */
-    initLabel(isTooltip) {
-        return isTooltip ? "<p><b>" + this.#vocab["wave"] + " " + this.#wave + "</b></p>" : 
-                            "<p><b>" + this.#vocab["selected"] + " " + this.#vocab["survey wave"] + ": " + this.#wave + "</b></p>";
+    initLabel() {
+        return "<p><b>" + this.#vocab["wave"] + " " + vocab[this.#wave] + "</b></p>"
     }
 
     /**
-     * Writes the initial label combined with the infomation about the canton and its variables directly into HTML, using d3.js.
+     * Writes the initial label combined with the infomation about the canton and its variables directly into HTML.
      */
     initDescr() {
         let label = this.initLabel() + "<p><b>" + this.#vocab["Kanton"] + "</b></p>" 
@@ -368,6 +383,11 @@ class Map {
 
         d3.select("#canton-descr").html(label);
     }
+
+    isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    
 
     setWave(wave) {
         this.#wave = wave;
