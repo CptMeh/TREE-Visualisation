@@ -1,18 +1,3 @@
-/*
-let vocab = {"word" : ["german", "english", "french"],
-                "Kanton" : ["Kanton", "Canton", "Canton"],
-                "coloring" : ["Färbung", "Coloring", "?????????"],
-                "selected" : ["Ausgewählte", "selected", "??????????"],
-                "survey wave" : ["Befragungswelle", "Survey wave", "Vague d'enquête"],
-                "wave" : ["Welle", "Wave", "Vague"],
-                "variable" : ["NIA", "AB", "BB", "ZL"],
-                "NIA" : ["Nicht in Ausbildung", "Not in Education", "Pas en formation"],
-                "AB" : ["Allgemeinausbildung", "Vocational Training", "Formation professionnelle"],
-                "BB" : ["Berufsausbildung", "Professional- / Vocational Education", "Formation professionnelle en entreprise"],
-                "ZL" : ["Zwischenlösung", "Temporary Solution", "Solution temporaire"]
-                };*/
-
-
 // German Vocabulary
 const germanVocab = {
     GR : "Deutsch",
@@ -22,52 +7,54 @@ const germanVocab = {
     Kanton: "Kanton",
     coloring: "Färbung",
     selected: "Ausgewählte",
-    "survey wave": "Befragungswelle",
+    survey_wave: "Befragungswelle",
     wave: "Welle",
     NET: "Nicht in Ausbildung",
     GE: "Allgemeinbildung",
     VET: "Berufsbildung",
     IS: "Zwischenlösung",
     table_head : 'Gesammtschweizerische Verteilung',
-    table_lang : 'Sprachverteilung',
+    table_lang : 'Verteilung nach Sprachregion',
     drop_down_label : "Wähle eine Ausbildungskategorie aus...",
-    banner_title : "TREE2-Studie Visualisierung",
+    banner_title : "Ausbildungsstatus der zweiten TREE-Kohorte nach Kanton",
     map : "Karte",
     dev : "Entwickler",
     lang : "Sprache",
-    map_title : "Visualierung der TREE2-Studie - kantonal",
+    map_title : "Ausbildungssituation der 2. TREE-Kohorte nach Kanton",
     cnt : "Weiters",
     descr : [["Beschreibung"], 
-            ["Visualisierung der TREE2-Studie",
-            "Willkommen zur geographischen Darstellung der TREE2-Studie! Die drei interaktiven Karten präsentieren die drei Befragungswellen der TREE2-Kohorte auf \
-            anschauliche Weise, wobei man zwischen verschiedenen Ausbildungskategorien wie \"Allgemeinbildung\", \"Berufsbildung\", \"Zwischenlösung\" und \"Nicht in Ausbildung\" \
-            über ein Dropdown-Menü oberhalb der Karte wählen kann. Auf der rechten Seite der Karten befindet sich jeweils eine Tabelle, die die gesamten prozentualen Anteile der \
-            Ausbildungskategorien schweizweit für die spezifische Befragungswelle darstellt. Bei der Auswahl eines Kantons werde durch einen Tooltip die prozentualen Anteil der \
-            Ausbildungskategorien des entsprechenden Kantons angezeigt. Zusätzlich wird die ausgewählte Ausbildungskategorie sowohl \
-            in der Tabelle als auch im Tooltip rot markiert, um sie deutlich hervorzuheben."],
+            ["Ausbildungssituation der 2. TREE-Kohorte nach Kanton",
+            "Die interaktiven Karten veranschaulichen die Ausbildungssituation der 2. TREE-Kohorte (TREE2) nach Befragungswelle und Kanton. Wählen Sie im Dropdown-Menu eine der vier Ausbildungssituationen aus \
+	        (Allgemeinbildung, Berufsbildung, Zwischenlösung und nicht in Ausbildung). \
+            Die Tabelle rechts der Karten zeigt Ihnen für die Schweiz als Ganzes, wie sich die TREE2-Befragten prozentual auf die Ausbildungssituationen verteilen. \
+	        Wenn Sie mit dem Cursor-Pfeil über die einzelnen Kantone auf der Karte streichen, wird Ihnen die Verteilung im überstrichenen Kanton angezeigt. \
+            Die im Dropdown-Menu ausgewählte Ausbildungssituation ist jeweils rot hervorgehoben. \
+	        Wenn ein Kanton mit einer Schraffur auf weissem Hintergrund angezeigt wird, heisst das, dass für diesen Kanton zu wenig Fälle vorhanden sind, um statistische Aussagen machen zu können."
+            ],
             
-            ["Erklärung zu den Variablen",
-            "<ul><li><strong>Berufsbildung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich in einem berufsbildenden Ausbildungsprogramm befinden. \
-            Dies umfasst Personen, die ein Eidgenössisches Berufsattest (EBA), eine Berufslehre mit einem Eidgenössischen Fähigkeitszeugnis (EFZ) oder eine Berufsmaturität absolvieren.</li>\
-             <li><strong>Allgemeinbildung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich in einem allgemeinbildenden Ausbildungsprogramm befinden. \
-             Dazu gehören Personen, die das Gymnasium besuchen, sowie andere allgemeinbildende Ausbildungswege.</li>\
-             <li><strong>Zwischenlösung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich in einer Übergangslösung befinden, bevor sie eine berufliche \
-             oder allgemeinbildende Ausbildung beginnen. Dies kann das Absolvieren des 10. Schuljahres, ein Praktikum oder andere Zwischenlösungen umfassen.</li>\
-             <li><strong>Nicht in Ausbildung:</strong> Diese Variable erfasst die Teilnehmerinnen und Teilnehmer, die sich zum Zeitpunkt der Datenerhebung nicht in einem formellen Ausbildungsprogramm befinden.</li></ul>"
+            ["Zu den einzelnen Ausbildungssituationen",
+            "<ul>\
+	        <li><strong>Berufsbildung:</strong> 2-4jährige Berufslehre (Eidgenössisches Berufsattest (EBA) oder Eidgenössisches Fähigkeitszeugnis (EFZ, inkl. Berufsmaturität 1).</li>\
+            <li><strong>Allgemeinbildung:</strong> Gymnasium, Fachmittelschule u.ä..</li>\
+            <li><strong>Zwischenlösung:</strong> 10. Schuljahr, Praktikum Vorlehre, Motivationssemester u.ä..</li>\
+            <li><strong>Nicht in Ausbildung:</strong> Nicht in einer formalen Ausbildung.</li>\
+	        </ul>"
             ],
 
             ["TREE-Studie", 
-            "TREE (Transitionen von der Erstausbildung ins Erwerbsleben) ist eine umfassende, schweizweite Langzeitstudie, die den Übergang von Jugendlichen von der Schule ins \
-            Erwachsenenleben (Transition) untersucht. Im Fokus dieser Untersuchung stehen die Bildungs- und Karriereverläufe nach dem Verlassen der obligatorischen Schule. Die  \
-            erste Stichprobe (TREE1) umfasst mehr als 6.000 Jugendliche, die im Jahr 2000 am PISA-Projekt (Programme for International Student Assessment) teilgenommen haben und im \
-            selben Jahr die obligatorische Schulpflicht abgeschlossen haben. Diese Stichprobe ist national und sprachregional repräsentativ. Seit 2016 wird eine zweite Stichprobe \
-            (TREE2) von fast 10.000 Jugendlichen längschnittlich befragt. Dadurch zählt TREE zu einer der weltweit wenigen Multi-Kohorten-Studien, die kohortenübergreifende Vergleiche ermöglichen."
+            "TREE (Transitionen von der Erstausbildung ins Erwerbsleben) ist eine schweizweite Längsschnittstudie, die den Übergang von Jugendlichen von der Schule ins Erwachsenenleben (Transition) untersucht. \
+            Im Fokus der Studie stehen Ausbildungs- und Erwerbsverläufe nach dem Ende der obligatorischen Schule. Die hier dargestellten Ergebnisse beziehen sich auf die 2. TREE-Kohorte (TREE2), \
+            welche 2016 aus der obligatorischen Schulpflicht entlassen wurde. Sie beziehen sich auf die Ausbildungssituation zum Zeitpunkt der jeweiligen Befragungswelle:\
+            <ul>\
+            <li><strong>Welle 1:</strong> Erstes Jahr nach Ende der obligatorischen Schulzeit (2017, Durchschnittsalter 16-17 Jahre).</li>\
+            <li><strong>Welle 2:</strong> Zweites Jahr nach Ende der obligatorischen Schulzeit (2018, Durchschnittsalter 17-18 Jahre).</li>\
+            <!--usw.--></ul>"
             ],
             
-            ["Weiteres",
-            "Diese Visualisierung wurde unter Zusammenarbeit von Marlene Kulowatz und Ramon Näf als Projekt für die Vorlesung \"Open Data and Open Government\" an der Universität Bern im \
-            Frühjahressemester 2023 entworfen. Die Daten zur TREE-Studie wurden von <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a> \
-            zur Verfügung gestellt."]
+            ["Weitere Informationen",
+            "Diese Visualisierung wurde von Marlene Kulowatz und Ramon Näf als Projekt für die Vorlesung \"Open Data and Open Government\" an der Universität Bern im \
+            Frühjahrssemester 2023 erarbeitet."
+            ]
             ],
     footer : ["TREE-Studie", "Universität Bern", "Institut für Soziologie"]
 };
@@ -79,41 +66,51 @@ const englishVocab = {
     IT: "Italian",
     EN: "English",
     Kanton: "Canton",
-    coloring: "Coloring",
+    coloring: "Colouring",
     selected: "selected",
-    "survey wave": "survey wave",
+    survey_wave : "panel wave",
     wave: "Wave",
     NET: "Not in education or training",
     GE: "General education",
     VET: "Vocational education & training",
     IS: "Intermediate solution",
-    table_head: 'Swiss-wide Distribution',
-    table_lang : 'Language distribution',
-    drop_down_label : "Select an education class...",
-    banner_title : "TREE2-Study Visualisation",
+    table_head: 'Distribution at national level',
+    table_lang : 'Distribution by language region',
+    drop_down_label : "Select a type of education...",
+    banner_title : "Educational status of the 2nd TREE cohort by canton",
     map : "Map",
     dev : "Developers",
     lang : "Language",
-    map_title : "Visualisation of the TREE2-Study - cantonal",
+    map_title : "Educational status of the 2nd TREE cohort by canton",
     cnt : "Continued",
     descr : [
         ["Description"], 
-        ["Visualization of the TREE2-Study",
-        "Welcome to the geographical representation of the TREE2-Study! The three interactive maps present the three survey waves of the TREE2 cohort in an illustrative way, allowing users to choose between different education categories such as \"General education\", \"Vocational education & training\", \"Intermediate solution\", and \"Not in education or training\" via a dropdown menu above the map. On the right side of the maps, there is a table displaying the total percentage shares of the education categories nationwide for the specific survey wave. When selecting a canton, the tooltip will display the percentage share of the education categories for the respective canton. Additionally, the selected education category is highlighted in red both in the table and in the tooltip to emphasize it."],
-        
-        ["Explanation of the variables",
-        "<ul><li><strong>Vocational education & training:</strong> This variable captures participants who are enrolled in a vocational training program. This includes individuals who obtain a Federal Vocational Certificate (EBA), a Federal Certificate of Competence (EFZ), or a Vocational Baccalaureate.</li>\
-         <li><strong>General education:</strong> This variable captures participants who are enrolled in a general education program. This includes individuals attending high school, as well as other general education pathways.</li>\
-         <li><strong>Intermediate solution:</strong> This variable captures participants who are in a transitional solution before starting a vocational or general education program. This may include completing the 10th year of school, an internship, or other intermediate solutions.</li>\
-         <li><strong>Not in education or training:</strong> This variable captures participants who are not enrolled in a formal education program at the time of data collection.</li></ul>"
+        ["Educational status of the 2nd TREE cohort by canton",
+        "The interactive maps illustrate the training situation of the 2nd TREE cohort (TREE2) by survey wave and canton. Select one of the four training situations \"General education\", \"Vocational education & training\", \"Intermediate solution\", and \"Not in education or training\" in the dropdown menu above the map. \
+        The table on the right side of the maps informs you about the percentage distribution at national level. If you move the cursor arrow over a given canton on the map, the distribution in the respective canton is displayed. \
+        The category you've selected in the drop-down menu is highlighted in red. If a canton is displayed with hatching on a white background, this means that there are too few cases for this canton to allow for reliable statistics."],
+            
+        ["Categories of educational status",
+        "<ul>\
+        <li><strong>Vocational education & training:</strong> 2-4-year VET programmes, including Federal Vocational Certificate (EBA), Federal Certificate of Competence (EFZ), and Vocational Baccalaureate (VB, type 1).</li>\
+        <li><strong>General education:</strong> academic baccalaureate schools.</li>\
+        <li><strong>Intermediate solution:</strong> Transitional programmes such as a 10th school year or preparatory internships.</li>\
+        <li><strong>Not in education or training:</strong> No attendance of any formal education programme.</li>\
+        </ul>"
         ],
 
-        ["TREE-Study", 
-        "TREE (Transitions from Education to Employment) is a comprehensive, nationwide longitudinal study that examines the transition of adolescents from school to adulthood. This study focuses on the educational and career pathways after leaving compulsory schooling. The first sample (TREE1) consists of more than 6,000 adolescents who participated in the Programme for International Student Assessment (PISA) project in 2000 and completed compulsory schooling in the same year. This sample is nationally and linguistically representative. Since 2016, a second sample (TREE2) of almost 10,000 adolescents has been longitudinally surveyed. Thus, TREE is one of the few multi-cohort studies worldwide that enable cohort-comparative analyses."],
+        ["TREE study", 
+        "TREE (Transitions from Education to Employmnt) is a large panel survey following up compulsory school leavers from all over Switzerland through their post-compulsory education and training and into employment and adulthood. \
+        The study focuses on post-compulsory educational and occupational pathways. The results presented here relate to the 2nd TREE cohort (TREE2), which left compulsory education in 2016. They relate to the educational situation at the time of the respective panel wave: \
+        <ul>\
+        <li><strong>Panel wave 1:</strong> First year after compulsory school (2017, average age 16-17).</li>\
+        <li><strong>Panel wave 2:</strong> Second years after compulsory school (2018, average age 17-18).</li>\
+        <!--etc.--></ul>"
+        ],
 
         ["Additional Information",
-        "This visualization was designed as a project for the course \"Open Data and Open Government\" at the University of Bern in the spring semester of 2023, in collaboration with Marlene Kulowatz and Ramon Näf. The data for the TREE-Study were provided by <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a>."]
-        ],
+        "This visualization was designed in the context of the course \"Open Data and Open Government\" at the University of Bern in the spring semester of 2023 by Marlene Kulowatz and Ramon Näf."
+        ]],
     footer : ["TREE-Study", "University of Bern", "Institute of Sociology"]
 };
 
@@ -127,7 +124,7 @@ const frenchVocab = {
     Kanton: "Canton",
     coloring: "Coloration",
     selected: "Sélectionné",
-    "survey wave": "Vague d'enquête",
+    survey_wave : "Vague d'enquête",
     wave: "Vague",
     NET: "Pas en formation",
     GE: "Formation générale",
@@ -140,27 +137,41 @@ const frenchVocab = {
     map: "Carte",
     dev: "Développeur",
     lang: "Langue",
-    map_title: "Visualisation de l'étude TREE2 - cantonale",
+    map_title: "Situation formative de la 2e cohorte TREE (TREE2) par canton",
     cnt: "Continuer",
     descr: [
         ["Description"],
-        ["Visualization of the TREE2-Study",
-            "Welcome to the geographical representation of the TREE2-Study! The three interactive maps present the three survey waves of the TREE2 cohort in an illustrative way, allowing users to choose between different education categories such as \"General education\", \"Vocational education & training\", \"Intermediate solution\", and \"Not in education or training\" via a dropdown menu above the map. On the right side of the maps, there is a table displaying the total percentage shares of the education categories nationwide for the specific survey wave. When selecting a canton, the tooltip will display the percentage share of the education categories for the respective canton. Additionally, the selected education category is highlighted in red both in the table and in the tooltip to emphasize it."],
-
-        ["Explanation of the variables",
-            "<ul><li><strong>Formation professionnelle:</strong> Cette variable concerne les participants inscrits dans un programme de formation professionnelle. Cela inclut les individus qui obtiennent un Attestation Fédérale de Formation Professionnelle (AFP), un Certificat Fédéral de Capacité (CFC), ou une Maturité Professionnelle.</li>\
-             <li><strong>Formation générale:</strong> Cette variable concerne les participants inscrits dans un programme d'éducation générale. Cela inclut les individus fréquentant le lycée, ainsi que d'autres parcours d'éducation générale.</li>\
-             <li><strong>Solution transitoire:</strong> Cette variable concerne les participants qui se trouvent dans une solution transitoire avant de commencer une formation professionnelle ou générale. Cela peut inclure la réussite de la 10e année scolaire, un stage, ou d'autres solutions intermédiaires.</li>\
-             <li><strong>Pas en formation:</strong> Cette variable concerne les participants qui ne sont pas inscrits dans un programme de formation formel au moment de la collecte des données.</li></ul>"
+        ["Situation formative de la 2e cohorte TREE (TREE2) par canton",
+        "Les cartes interactives illustrent la situation de formation de la 2e cohorte TREE (TREE2) par vague d'enquête et par canton. Sélectionnez dans le menu déroulant l'une des quatre situations de formation \
+	    (formation générale, formation professionnelle, solution intermédiaire et pas en formation). \
+        Le tableau à droite des cartes vous montre, pour la Suisse dans son ensemble, la distribution des personnes interrogées dans le cadre de TREE2 à travers les situations de formation. \
+	    Si vous passez la flèche du curseur sur un canton donné dans la carte, la répartition dans le canton en question s'affiche. \
+        La situation de formation sélectionnée dans le menu déroulant est toujours mise en évidence en rouge. \
+	    Si un canton est affiché avec une hachure sur fond blanc, cela signifie que le nombre de cas pour ce canton est trop petit pour élaborer des statistiques."
         ],
 
-        ["TREE-Studie",
-            "TREE (Transitionen von der Erstausbildung ins Erwerbsleben) est une étude longitudinale exhaustive à l'échelle nationale qui examine la transition des adolescents de l'école à l'âge adulte. Cette étude se concentre sur les parcours éducatifs et professionnels après avoir quitté l'école obligatoire. Le premier échantillon (TREE1) comprend plus de 6 000 adolescents qui ont participé au projet Programme for International Student Assessment (PISA) en 2000 et ont terminé la scolarité obligatoire la même année. Cet échantillon est représentatif au niveau national et linguistique. Depuis 2016, un deuxième échantillon (TREE2) de près de 10 000 adolescents est interrogé longitudinalement. Ainsi, TREE fait partie des rares études multi-cohortes dans le monde qui permettent des analyses comparatives entre cohortes."],
+        ["Situation formative",
+        "<ul>\
+        <li><strong>Formation professionnelle:</strong> Attestation Fédérale de Formation Professionnelle (AFP), Certificat Fédéral de Capacité (CFC; y inclue maturité professionnelle du type 1).</li>\
+        <li><strong>Formation générale:</strong> Lycée, école de culture générale ou similaire.</li>\
+        <li><strong>Solution transitoire:</strong> 10e année scolaire, stage, préapprentissage, semestre de motivation ou similaire.</li>\
+        <li><strong>Pas en formation:</strong> Aucune activité formative dans un programme de formation formel.</li>\
+        </ul>"
+        ],
 
-        ["Additional Information",
-            "This visualization was designed as a project for the course \"Open Data and Open Government\" at the University of Bern in the spring semester of 2023, in collaboration with Marlene Kulowatz and Ramon Näf. The data for the TREE-Study were provided by <a href='https://www.tree.unibe.ch/ueber_uns/personen/dr_meyer_thomas/index_ger.html'>Dr. Thomas Meyer</a>."]
-    ],
-    footer: ["TREE-Studie", "Universität Bern", "Institut für Soziologie"]
+        ["Etudié TREE",
+        "TREE (Transitions from Education to Employment) est une grande enquête de panel suivant les jeunes ayant terminé leur scolarité obligatoire dans toute la Suisse à travers leur formation post-obligatoire et leur entrée dans l'emploi et l'âge adulte. \
+        L'étude se concentre sur les parcours éducatifs et professionnels post-obligatoires. Les résultats présentés ici concernent la 2e cohorte de TREE (TREE2), qui a terminé l'enseignement obligatoire en 2016. Ils se rapportent à la situation éducative au moment de chaque vague du panel : \
+        <ul>\
+        <li><strong>Vague du panel 1 :</strong> Première année après l'école obligatoire (2017, âge moyen 16-17 ans).</li>\
+        <li><strong>Vague du panel 2 :</strong> Deuxième année après l'école obligatoire (2018, âge moyen 17-18 ans).</li>\
+        <!--etc.--></ul>"
+        ],
+
+        ["Information complémentaire",
+        "Cette visualisation a été réalisée dans le cadre du cours \"Open Data and Open Government\" à l'Université de Berne en 2023 par Marlene Kulowatz et Ramon Näf."
+        ]],
+    footer: ["Etude TREE", "Université de Berne", "Institut de sociologie"]
 };
 
 
