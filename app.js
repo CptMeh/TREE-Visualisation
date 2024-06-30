@@ -1,22 +1,20 @@
-// Online URL for the geo data for map of Switzerland with the TREE2-Data
-const geoDataURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/geo-data/map_data.geojson'
-const summaryURL = 'https://raw.githubusercontent.com/CptMeh/TREE-Visualisation/main/data/study-data/summary.json'
+const geoDataURL = './data/geo_data/map_data.geojson'
+const summaryURL = './data/study_data/summary.json'
 
 var maps = []
-// Initialise the selected language (See languageSelect.js)
+
+// Initialise the selected language (see func/util.js)
 const vocab = languageSelect();
 
-
-//run(geoDataURL, treeDataURL)
-run(geoDataURL)
+run(geoDataURL, summaryURL)
 
 /**
  * Creates the Visualisation of the data at the given URLs.
- * 
+ *
  * @param {String} geoDataURL - the URL to the Data source of the geo data
  * @param {String} summaryURL - the URL to the Data source of the study data
-**/
-function run(geoDataURL) {
+ **/
+function run(geoDataURL, summaryURL) {
     // Get the map- and TREE-data and check if everything worked. Then use the drawMap function to render the map.
     d3.json(geoDataURL).then(function(geoData) {
         // GeoJSON data loaded successfully
@@ -30,6 +28,8 @@ function run(geoDataURL) {
         });
     });
 }
+
+
 
 /**
  * Initialises all important parts of this Visualisation:
@@ -72,21 +72,3 @@ function init(geoData, summary) {
     HTMLfooter();
 }
 
-function floatingBox() {
-        // Select the body element
-        var body = d3.select('body');
-
-        // Append a div element to the body
-        var fixedDiv = body.append('div')
-            .attr('id', 'descr_1')
-            .attr('class', 'card fixed-div p-4 mb-3') // Add Bootstrap card and custom class for styling
-            .style('width', '400px') // Set the width of the card
-            .text('This is a fixed-position card'); // Set card content
-        
-        // Set CSS styles for the fixed position
-        fixedDiv.style('position', 'fixed')
-            .style('top', '27%')  // Position it 50% from the top
-            .style('right', '200px') // Adjust the distance from the right edge
-            .style('transform', 'translateY(-50%)'); // Center it vertically
-        
-}
