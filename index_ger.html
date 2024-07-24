@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>TREE2</title>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>localStorage.setItem('lang', 0)</script> <!--0 is for German-->
+</head>
+
+<body>
+  <!--Navbar-->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a id="banner-title" class="navbar-brand px-4" href="#"></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a id="banner-maps" class="nav-link dropdown-toggle px-4" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a id="map_dropdown_1" class="dropdown-item" data-target="map_w1_edu"></a>
+            <a id="map_dropdown_2" class="dropdown-item" data-target="map_w2_edu"></a>
+            <a id="map_dropdown_3" class="dropdown-item" data-target="map_w3_edu"></a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a id="banner-descr" class="nav-link px-4" href="#descr"></a>
+        </li>
+
+        <li class="nav-item">
+          <a id="banner-dev" class="nav-link px-4" href="#dev"></a>
+        </li>
+
+      
+      </ul>
+    </div>
+  </nav>
+
+  
+
+  <div id="main" class="container mb-2">
+    </br>
+    <h1 id="map-title" class="p-1 mt-5">Ausbildungssituation der 2. TREE-Kohorte nach Kanton</h1>
+    </br>
+
+    <div id="maps" class="container"><!--This div contains all the maps for the waves--></div>
+      
+    <div id="descr" class="card p-4 mb-3">
+        <h2>Beschreibung</h2>
+        <h4 class="mt-4">Ausbildungssituation der 2. TREE-Kohorte nach Kanton</h4>
+        <p>Die interaktiven Karten veranschaulichen die Ausbildungssituation der 2. TREE-Kohorte (TREE2) nach Befragungswelle und Kanton. Wählen Sie im Dropdown-Menu eine der vier Ausbildungssituationen aus (Allgemeinbildung, Berufsbildung, Zwischenlösung und nicht in Ausbildung). Die Tabelle rechts der Karten zeigt Ihnen für die Schweiz als Ganzes, wie sich die TREE2-Befragten prozentual auf die Ausbildungssituationen verteilen. Wenn Sie mit dem Cursor-Pfeil über die einzelnen Kantone auf der Karte streichen, wird Ihnen die Verteilung im überstrichenen Kanton angezeigt. Die im Dropdown-Menu ausgewählte Ausbildungssituation ist jeweils rot hervorgehoben. Wenn ein Kanton mit einer Schraffur auf weißem Hintergrund angezeigt wird, heißt das, dass für diesen Kanton zu wenig Fälle vorhanden sind, um statistische Aussagen machen zu können.</p>
+        
+        <h4 class="mt-4">Zu den einzelnen Ausbildungssituationen</h4>
+        <ul>
+            <li><strong>Berufsbildung:</strong> 2-4jährige Berufslehre (Eidgenössisches Berufsattest (EBA) oder Eidgenössisches Fähigkeitszeugnis (EFZ, inkl. Berufsmaturität 1).</li>
+            <li><strong>Allgemeinbildung:</strong> Gymnasium, Fachmittelschule u.ä..</li>
+            <li><strong>Zwischenlösung:</strong> 10. Schuljahr, Praktikum, Vorlehre, Motivationssemester u.ä..</li>
+            <li><strong>Nicht in Ausbildung:</strong> Nicht in einer formalen Ausbildung.</li>
+        </ul>
+        
+        <h4 class="mt-4">TREE-Studie</h4>
+        <p>TREE (Transitionen von der Erstausbildung ins Erwerbsleben) ist eine schweizweite Längsschnittstudie, die den Übergang von Jugendlichen von der Schule ins Erwachsenenleben (Transition) untersucht. Im Fokus der Studie stehen Ausbildungs- und Erwerbsverläufe nach dem Ende der obligatorischen Schule. Die hier dargestellten Ergebnisse beziehen sich auf die 2. TREE-Kohorte (TREE2), welche 2016 aus der obligatorischen Schulpflicht entlassen wurde. Sie beziehen sich auf die Ausbildungssituation zum Zeitpunkt der jeweiligen Befragungswelle:</p>
+        <ul>
+            <li><strong>Welle 1:</strong> Erstes Jahr nach Ende der obligatorischen Schulzeit (2017, Durchschnittsalter 16-17 Jahre).</li>
+            <li><strong>Welle 2:</strong> Zweites Jahr nach Ende der obligatorischen Schulzeit (2018, Durchschnittsalter 17-18 Jahre).</li>
+            <!--usw.-->
+        </ul>
+        
+        <h4 class="mt-4">Weitere Informationen</h4>
+        <p>Diese Visualisierung wurde von Marlene Kulowatz und Ramon Näf als Projekt für die Vorlesung "Open Data and Open Government" an der Universität Bern im Frühjahrssemester 2023 erarbeitet.</p>
+    </div>    <script src="./func/util.js"></script>
+    <script src="./func/map.js"></script>
+    <script src="app.js"></script>
+
+  </div>
+  
+
+  <footer id="end-card" class="row p-3">
+    <div id="dev" class="col p-3 mb-3">
+      <h5>Developers</h5>
+      <dt>Marlene Kulowatz</dt>
+      <dd>marlene.kulowatz@students.unibe.ch</dd>
+      <dt>Ramon Näf</dt>
+      <dd>ramon.naef@students.unibe.ch</dd>
+    </div>
+
+    <div id="git" class="col p-3 mb-3">
+      <h5>Repository</h5>
+      <a href="https://github.com/CptMeh/TREE-Visualisation">github.com</a>
+    </div>
+
+    <div id="tree" class="col p-3 mb-3">
+    </div>
+
+  </footer>
+</body>
+
+</html>
